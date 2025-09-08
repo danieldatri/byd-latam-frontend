@@ -13,9 +13,9 @@ export function AdBanner({
 
   return (
     <div
-      className={`bg-muted border border-border rounded-lg flex items-center justify-center ${dimensions[size]} ${className}`}
+      className={`bg-gray-100 border border-gray-300 rounded-lg flex items-center justify-center ${dimensions[size]} ${className}`}
     >
-      <div className="text-center text-muted-foreground">
+      <div className="text-center text-gray-700">
         <p className="text-sm font-medium">Espacio Publicitario</p>
         <p className="text-xs">{size === "banner" ? "728x90" : size === "sidebar" ? "300x250" : "320x50"}</p>
       </div>

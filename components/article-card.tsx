@@ -41,8 +41,8 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
               className={`w-full ${imageHeight} object-cover group-hover:scale-105 transition-transform duration-300`}
             />
           ) : (
-            <div className={`w-full ${imageHeight} bg-muted flex items-center justify-center`}>
-              <span className="text-muted-foreground">Sin imagen</span>
+            <div className={`w-full ${imageHeight} bg-gray-100 flex items-center justify-center`}>
+              <span className="text-gray-500">Sin imagen</span>
             </div>
           )}
           <div className="absolute top-4 left-4 flex gap-2">
@@ -58,12 +58,12 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
         </div>
         <CardContent className="p-6">
           <h3
-            className={`font-playfair font-bold mb-3 group-hover:text-primary transition-colors line-clamp-2 ${featured ? "text-2xl" : "text-xl"}`}
+            className={`font-playfair font-bold mb-3 group-hover:text-primary transition-colors line-clamp-2 text-gray-900 ${featured ? "text-2xl" : "text-xl"}`}
           >
             {article.title}
           </h3>
-          <p className="text-muted-foreground mb-4 line-clamp-3 text-pretty">{article.excerpt}</p>
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
+          <p className="text-gray-800 mb-4 line-clamp-3 text-pretty">{article.excerpt}</p>
+          <div className="flex items-center justify-between text-sm text-gray-600">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1">
                 <Calendar className="h-4 w-4" />
@@ -74,7 +74,7 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
                 <span>{article.country}</span>
               </div>
             </div>
-            {article.author && <span className="font-medium">{article.author.name}</span>}
+            {article.author && <span className="font-medium text-gray-900">{article.author.name}</span>}
           </div>
         </CardContent>
       </Link>
