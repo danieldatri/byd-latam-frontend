@@ -46,7 +46,7 @@ export function Footer() {
           {/* Logo and Description */}
           <div className="md:col-span-2">
             <Link href="/" className="flex items-center space-x-3 mb-4">
-              <img src="/logo-byd-latam-news.png" alt="BYD Latam News" className="h-10 w-auto" />
+              <img src="/new-logo-byd-latam-news.png" alt="BYD Latam News" className="h-10 w-auto" />
             </Link>
             <p className="text-sm text-header-footer-text max-w-md">
               Tu fuente confiable de noticias sobre BYD en Latinoamérica. Mantente informado sobre los últimos
