@@ -5,11 +5,29 @@ import { ArticleCard } from "@/components/article-card"
 import { Badge } from "@/components/ui/badge"
 import { MapPin } from "lucide-react"
 import { getPostsByCountry, getAllCountries, Post, Country } from "@/lib/sanity"
+import type { Metadata } from "next"
 
 interface CountryPageProps {
   params: {
     slug: string
   }
+}
+
+export async function generateMetadata({ params }: CountryPageProps): Promise<Metadata> {
+  const countries = await getAllCountries();
+  const country = countries.find((c: Country) => c.slug.current === params.slug);
+  if (!country) {
+    return {
+      title: "BYD Latam News - Country not found",
+    };
+  }
+  return {
+    title: `BYD Latam News - Noticias de ${country.name}`,
+    description: `Todas las noticias y actualizaciones de BYD en ${country.name}.`,
+    icons: {
+      icon: "/favicon.ico",
+    },
+  };
 }
 
 export default async function CountryPage({ params }: CountryPageProps) {

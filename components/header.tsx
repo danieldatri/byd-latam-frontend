@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 
 export function Header() {
   return (
-    <header className="header-component sticky top-0 z-50 w-full border-b">
+    <header className="header-component sticky top-0 z-50 w-full border-b opacity-85">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-3">
@@ -15,7 +15,7 @@ export function Header() {
               alt="BYD Latam News"
               width={210}
               height={100}
-              className="h-25 w-auto"
+              className="h-16 w-auto"
             />
           </Link>
 

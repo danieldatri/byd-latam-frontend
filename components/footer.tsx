@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Youtube, Instagram, Facebook, Twitter } from "lucide-react"
+import { Youtube, Instagram, Facebook, Twitter, X } from "lucide-react"
 
 export function Footer() {
   const socialLinks = [
@@ -23,7 +23,7 @@ export function Footer() {
     },
     {
       name: "X (Twitter)",
-      icon: Twitter,
+      icon: X,
       url: "https://x.com/bydlatamnews",
       handle: "@bydlatamnews",
     },
