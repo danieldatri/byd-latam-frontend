@@ -29,7 +29,7 @@ export const articlesQuery = `
       emoji
     },
     featured,
-    featuredImage {
+    mainImage {
       asset->{
         _id,
         url
@@ -72,7 +72,7 @@ export const featuredArticlesQuery = `
       emoji
     },
     featured,
-    featuredImage {
+    mainImage {
       asset->{
         _id,
         url
@@ -109,7 +109,7 @@ export const articleBySlugQuery = `
       name,
       emoji
     },
-    featuredImage {
+    mainImage {
       asset->{
         _id,
         url
@@ -185,7 +185,7 @@ export const postsByCountryQuery = `
       name,
       emoji
     },
-    featuredImage {
+    mainImage {
       asset->{
         _id,
         url

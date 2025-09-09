@@ -27,7 +27,7 @@ export default {
       validation: (Rule: any) => Rule.required().max(200),
     },
     {
-      name: "featuredImage",
+      name: "mainImage",
       title: "Imagen Principal",
       type: "image",
       options: {

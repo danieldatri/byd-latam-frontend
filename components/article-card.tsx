@@ -35,7 +35,7 @@ interface ArticleCardProps {
       emoji?: string | null
     } | null
     featured?: boolean | null
-    featuredImage?: {
+    mainImage?: {
       asset: {
         _id: string
         url: string
@@ -76,10 +76,10 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
     <Card className={`group hover:shadow-lg transition-all duration-300 ${cardSize}`}>
       <Link href={`/article/${article.slug.current}`}>
         <div className="relative overflow-hidden rounded-t-lg">
-          {article.featuredImage ? (
+          {article.mainImage ? (
             <Image
-              src={article.featuredImage.asset.url || urlFor(article.featuredImage).url()}
-              alt={article.featuredImage.alt || article.title}
+              src={article.mainImage.asset.url || urlFor(article.mainImage).url()}
+              alt={article.mainImage.alt || article.title}
               width={featured ? 800 : 400}
               height={featured ? 400 : 300}
               className={`w-full ${imageHeight} object-cover group-hover:scale-105 transition-transform duration-300`}
