@@ -1,5 +1,5 @@
 // Script para probar la conexión a Sanity
-import { getAllPosts, getFeaturedPosts, getAllCategories, getAllCountries, getAllAuthors } from '../lib/sanity'
+import { getAllPosts, getFeaturedPosts, getAllCategories, getAllCountries, getAllAuthors } from '../lib/sanity.js'
 
 async function testSanityConnection() {
   console.log('🔍 Probando conexión a Sanity...\n')

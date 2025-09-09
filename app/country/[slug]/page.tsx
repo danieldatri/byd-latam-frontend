@@ -38,7 +38,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
     notFound()
   }
 
-  const posts = await getPostsByCountry(country.name)
+  const posts = await getPostsByCountry(params.slug)
 
   return (
     <div className="min-h-screen bg-background">

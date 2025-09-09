@@ -174,7 +174,7 @@ export const authorsQuery = `
 `
 
 export const postsByCountryQuery = `
-  *[_type == "post" && country->name == $country] | order(publishedAt desc) {
+  *[_type == "post" && country->slug.current == $slug] | order(publishedAt desc) {
     _id,
     title,
     slug,
@@ -266,7 +266,7 @@ export async function getPostsByCountry(country: string) {
   if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID === "your-project-id") {
     return []
   }
-  return await client.fetch(postsByCountryQuery, { country })
+  return await client.fetch(postsByCountryQuery, { slug: country })
 }
 
 // Types para TypeScript
