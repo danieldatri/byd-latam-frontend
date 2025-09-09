@@ -44,9 +44,9 @@ export function Footer() {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo and Description */}
-          <div className="md:col-span-2">
-            <Link href="/" className="flex items-center space-x-3 mb-4">
-              <img src="/logo-byd-latam-news.png" alt="BYD Latam News" className="h-10 w-auto" />
+          <div className="md:col-span-2 flex flex-col items-center">
+            <Link href="/" className="mb-4 w-full flex justify-center">
+              <img src="/logo-byd-latam-news.png" alt="BYD Latam News" className="h-50 w-auto mx-auto" />
             </Link>
             <p className="text-sm text-header-footer-text max-w-md">
               Tu fuente confiable de noticias sobre BYD en Latinoamérica. Mantente informado sobre los últimos
@@ -60,10 +60,10 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  href="/noticias"
+                  href="/news"
                   className="text-header-footer-text/80 hover:text-header-footer-text transition-colors"
                 >
-                  Noticias
+                  News
                 </Link>
               </li>
               <li>

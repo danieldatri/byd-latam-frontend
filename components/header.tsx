@@ -15,9 +15,9 @@ export function Header() {
             <Image
               src="/logo-byd-latam-news.png"
               alt="BYD Latam News"
-              width={160}
-              height={50}
-              className="h-12 w-auto"
+              width={210}
+              height={100}
+              className="h-25 w-auto"
             />
           </Link>
 
@@ -27,10 +27,10 @@ export function Header() {
               Inicio
             </Link>
             <Link
-              href="/noticias"
+              href="/news"
               className="text-sm font-medium text-header-footer-text hover:text-primary transition-colors"
             >
-              Noticias
+              News
             </Link>
             <Link
               href="/reviews"
@@ -47,7 +47,7 @@ export function Header() {
                   {countries.map((country) => (
                     <Link
                       key={country}
-                      href={`/pais/${country.toLowerCase()}`}
+                      href={`/country/${country.toLowerCase()}`}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary hover:text-white transition-colors"
                     >
                       {country}

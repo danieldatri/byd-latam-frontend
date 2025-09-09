@@ -5,7 +5,7 @@ export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "your-project-id",
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
   useCdn: true,
-  apiVersion: "2024-01-01",
+  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2024-01-01",
 })
 
 const builder = imageUrlBuilder(client)
@@ -21,8 +21,13 @@ export const articlesQuery = `
     title,
     slug,
     excerpt,
+    body,
     publishedAt,
-    country,
+    country->{
+      _id,
+      name,
+      emoji
+    },
     featured,
     featuredImage {
       asset->{
@@ -32,14 +37,21 @@ export const articlesQuery = `
       alt
     },
     category->{
+      _id,
       title,
       color
     },
     author->{
+      _id,
       name,
-      image
+      image {
+        asset->{
+          url
+        }
+      }
     },
     tags[]->{
+      _id,
       title,
       color
     }
@@ -52,8 +64,14 @@ export const featuredArticlesQuery = `
     title,
     slug,
     excerpt,
+    body,
     publishedAt,
-    country,
+    country->{
+      _id,
+      name,
+      emoji
+    },
+    featured,
     featuredImage {
       asset->{
         _id,
@@ -62,12 +80,18 @@ export const featuredArticlesQuery = `
       alt
     },
     category->{
+      _id,
       title,
       color
     },
     author->{
+      _id,
       name,
-      image
+      image {
+        asset->{
+          url
+        }
+      }
     }
   }
 `
@@ -78,9 +102,13 @@ export const articleBySlugQuery = `
     title,
     slug,
     excerpt,
-    content,
+    body,
     publishedAt,
-    country,
+    country->{
+      _id,
+      name,
+      emoji
+    },
     featuredImage {
       asset->{
         _id,
@@ -89,16 +117,22 @@ export const articleBySlugQuery = `
       alt
     },
     category->{
+      _id,
       title,
       color
     },
     author->{
+      _id,
       name,
-      image,
-      bio,
-      social
+      image {
+        asset->{
+          url
+        }
+      },
+      bio
     },
     tags[]->{
+      _id,
       title,
       color
     }
@@ -131,19 +165,26 @@ export const authorsQuery = `
     name,
     slug,
     bio,
-    image,
-    social
+    image {
+      asset->{
+        url
+      }
+    }
   }
 `
 
 export const postsByCountryQuery = `
-  *[_type == "post" && country == $country] | order(publishedAt desc) {
+  *[_type == "post" && country->name == $country] | order(publishedAt desc) {
     _id,
     title,
     slug,
     excerpt,
     publishedAt,
-    country,
+    country->{
+      _id,
+      name,
+      emoji
+    },
     featuredImage {
       asset->{
         _id,
@@ -152,12 +193,147 @@ export const postsByCountryQuery = `
       alt
     },
     category->{
+      _id,
       title,
       color
     },
     author->{
+      _id,
       name,
-      image
+      image {
+        asset->{
+          url
+        }
+      }
     }
   }
 `
+
+// Query para obtener todos los países
+export const countriesQuery = `
+  *[_type == "country"] | order(name asc) {
+    _id,
+    name,
+    slug,
+    emoji
+  }
+`
+
+// Funciones para obtener datos con fallback
+export async function getAllPosts() {
+  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID === "your-project-id") {
+    return []
+  }
+  return await client.fetch(articlesQuery)
+}
+
+export async function getFeaturedPosts() {
+  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID === "your-project-id") {
+    return []
+  }
+  return await client.fetch(featuredArticlesQuery)
+}
+
+export async function getPostBySlug(slug: string) {
+  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID === "your-project-id") {
+    return null
+  }
+  return await client.fetch(articleBySlugQuery, { slug })
+}
+
+export async function getAllCategories() {
+  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID === "your-project-id") {
+    return []
+  }
+  return await client.fetch(categoriesQuery)
+}
+
+export async function getAllAuthors() {
+  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID === "your-project-id") {
+    return []
+  }
+  return await client.fetch(authorsQuery)
+}
+
+export async function getAllCountries() {
+  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID === "your-project-id") {
+    return []
+  }
+  return await client.fetch(countriesQuery)
+}
+
+export async function getPostsByCountry(country: string) {
+  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID === "your-project-id") {
+    return []
+  }
+  return await client.fetch(postsByCountryQuery, { country })
+}
+
+// Types para TypeScript
+export interface Post {
+  _id: string
+  title: string
+  slug: { current: string }
+  excerpt?: string | null
+  body?: any // Contenido de bloques de Sanity
+  publishedAt: string
+  country?: {
+    _id: string
+    name: string
+    emoji?: string | null
+  } | null
+  featured?: boolean | null
+  featuredImage?: {
+    asset: {
+      _id: string
+      url: string
+    }
+    alt?: string
+  } | null
+  category?: {
+    _id: string
+    title: string
+    color: string
+  } | null
+  author?: {
+    _id: string
+    name: string
+    image?: {
+      asset: {
+        url: string
+      }
+    }
+  } | null
+  tags?: Array<{
+    _id: string
+    title: string
+    color: string
+  }>
+}
+
+export interface Category {
+  _id: string
+  title: string
+  slug: { current: string }
+  description?: string
+  color: string
+}
+
+export interface Author {
+  _id: string
+  name: string
+  slug: { current: string }
+  bio?: any
+  image?: {
+    asset: {
+      url: string
+    }
+  }
+}
+
+export interface Country {
+  _id: string
+  name: string
+  slug: { current: string }
+  emoji?: string
+}

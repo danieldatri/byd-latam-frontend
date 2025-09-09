@@ -5,100 +5,20 @@ import { AdBanner } from "@/components/ad-banner"
 import { HeroBanner } from "@/components/hero-banner"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, TrendingUp } from "lucide-react"
+import { getAllPosts, getFeaturedPosts, getAllCountries, Post } from "@/lib/sanity"
 
-export default function HomePage() {
-  // Mock data - will be replaced with Sanity CMS data
-  const featuredArticles = [
-    {
-      _id: "1",
-      title: "BYD lanza su nueva línea de vehículos eléctricos en México",
-      slug: { current: "byd-nueva-linea-mexico" },
-      excerpt:
-        "La compañía china presenta tres nuevos modelos que prometen revolucionar el mercado mexicano de vehículos eléctricos con tecnología de punta y precios competitivos.",
-      publishedAt: "2024-01-15T10:00:00Z",
-      country: "México",
-      category: "Lanzamientos",
-      mainImage: {
-        asset: { url: "/byd-electric-car-launch-mexico.jpg" },
-        alt: "BYD vehículos eléctricos México",
-      },
-      author: { name: "Carlos Mendoza" },
-    },
-    {
-      _id: "2",
-      title: "Expansión de BYD en Brasil: Nueva planta de producción",
-      slug: { current: "byd-expansion-brasil-planta" },
-      excerpt:
-        "BYD anuncia la construcción de su segunda planta de producción en Brasil, lo que aumentará significativamente su capacidad de manufactura en Sudamérica.",
-      publishedAt: "2024-01-14T15:30:00Z",
-      country: "Brasil",
-      category: "Industria",
-      mainImage: {
-        asset: { url: "/byd-factory-brazil-construction.jpg" },
-        alt: "Planta BYD Brasil",
-      },
-      author: { name: "Ana Silva" },
-    },
-    {
-      _id: "3",
-      title: "BYD Argentina: Récord de ventas en el primer trimestre",
-      slug: { current: "byd-argentina-record-ventas" },
-      excerpt:
-        "Los vehículos eléctricos de BYD alcanzan cifras históricas en Argentina, consolidando su posición como líder en el mercado de movilidad sostenible.",
-      publishedAt: "2024-01-13T09:15:00Z",
-      country: "Argentina",
-      category: "Ventas",
-      mainImage: {
-        asset: { url: "/byd-sales-record-argentina.jpg" },
-        alt: "Ventas BYD Argentina",
-      },
-      author: { name: "Roberto García" },
-    },
-  ]
+export default async function HomePage() {
+  // Obtener datos reales de Sanity
+  const [featuredArticles, allPosts, countries] = await Promise.all([
+    getFeaturedPosts(),
+    getAllPosts(),
+    getAllCountries()
+  ])
 
-  const latestNews = [
-    {
-      _id: "4",
-      title: "BYD Chile inaugura nuevos centros de servicio",
-      slug: { current: "byd-chile-centros-servicio" },
-      excerpt: "La red de servicios de BYD se expande en Chile con la apertura de cinco nuevos centros especializados.",
-      publishedAt: "2024-01-12T14:20:00Z",
-      country: "Chile",
-      category: "Servicios",
-      author: { name: "María López" },
-    },
-    {
-      _id: "5",
-      title: "Tecnología de baterías BYD: Innovación en Colombia",
-      slug: { current: "byd-baterias-colombia" },
-      excerpt: "BYD presenta su nueva tecnología de baterías de larga duración en el mercado colombiano.",
-      publishedAt: "2024-01-11T11:45:00Z",
-      country: "Colombia",
-      category: "Tecnología",
-      author: { name: "Diego Herrera" },
-    },
-    {
-      _id: "6",
-      title: "BYD Perú: Alianza estratégica con distribuidores locales",
-      slug: { current: "byd-peru-alianza-distribuidores" },
-      excerpt:
-        "BYD fortalece su presencia en Perú mediante acuerdos con los principales distribuidores automotrices del país.",
-      publishedAt: "2024-01-10T16:30:00Z",
-      country: "Perú",
-      category: "Negocios",
-      author: { name: "Carmen Vega" },
-    },
-    {
-      _id: "7",
-      title: "BYD Uruguay: Primeros vehículos eléctricos llegan al mercado",
-      slug: { current: "byd-uruguay-primeros-vehiculos" },
-      excerpt: "Uruguay recibe los primeros modelos de BYD, marcando el inicio de la era eléctrica en el país.",
-      publishedAt: "2024-01-09T12:15:00Z",
-      country: "Uruguay",
-      category: "Lanzamientos",
-      author: { name: "Fernando Rodríguez" },
-    },
-  ]
+  // Filtrar artículos recientes (excluyendo los destacados)
+  const recentNonFeatured = allPosts
+    .filter((article: Post) => !article.featured)
+    .slice(0, 4)
 
   return (
     <div className="min-h-screen bg-background">
@@ -124,28 +44,40 @@ export default function HomePage() {
                   Destacados
                 </h2>
                 <Button variant="outline" asChild>
-                  <a href="/noticias">
+                  <a href="/news">
                     Ver todas <ArrowRight className="ml-2 h-4 w-4" />
                   </a>
                 </Button>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="md:col-span-2">
-                  <ArticleCard article={featuredArticles[0]} featured />
+              {featuredArticles && featuredArticles.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="md:col-span-2">
+                    <ArticleCard article={featuredArticles[0]} featured />
+                  </div>
+                  {featuredArticles[1] && <ArticleCard article={featuredArticles[1]} />}
+                  {featuredArticles[2] && <ArticleCard article={featuredArticles[2]} />}
                 </div>
-                <ArticleCard article={featuredArticles[1]} />
-                <ArticleCard article={featuredArticles[2]} />
-              </div>
+              ) : (
+                <div className="text-center py-8 text-muted-foreground">
+                  No hay artículos destacados disponibles
+                </div>
+              )}
             </section>
 
             {/* Latest News */}
             <section>
               <h2 className="font-playfair text-3xl font-bold mb-6">Últimas Noticias</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {latestNews.map((article) => (
-                  <ArticleCard key={article._id} article={article} />
-                ))}
-              </div>
+              {recentNonFeatured && recentNonFeatured.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {recentNonFeatured.map((article: Post) => (
+                    <ArticleCard key={article._id} article={article} />
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8 text-muted-foreground">
+                  No hay noticias recientes disponibles
+                </div>
+              )}
             </section>
           </div>
 
@@ -173,15 +105,28 @@ export default function HomePage() {
               <div className="bg-card p-6 rounded-lg border">
                 <h3 className="font-playfair text-xl font-bold mb-3">Países</h3>
                 <div className="space-y-2">
-                  {["México", "Brasil", "Argentina", "Chile", "Colombia", "Perú", "Uruguay"].map((country) => (
-                    <a
-                      key={country}
-                      href={`/pais/${country.toLowerCase()}`}
-                      className="block text-sm hover:text-primary transition-colors py-1"
-                    >
-                      {country}
-                    </a>
-                  ))}
+                  {countries && countries.length > 0 ? (
+                    countries.map((country: any) => (
+                      <a
+                        key={country._id}
+                        href={`/country/${country.slug.current}`}
+                        className="flex items-center gap-2 text-sm hover:text-primary transition-colors py-1"
+                      >
+                        {country.emoji && <span>{country.emoji}</span>}
+                        {country.name}
+                      </a>
+                    ))
+                  ) : (
+                    ["México", "Brasil", "Argentina", "Chile", "Colombia", "Perú", "Uruguay"].map((country) => (
+                      <a
+                        key={country}
+                        href={`/country/${country.toLowerCase()}`}
+                        className="block text-sm hover:text-primary transition-colors py-1"
+                      >
+                        {country}
+                      </a>
+                    ))
+                  )}
                 </div>
               </div>
             </div>
@@ -189,7 +134,6 @@ export default function HomePage() {
         </div>
       </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   )
