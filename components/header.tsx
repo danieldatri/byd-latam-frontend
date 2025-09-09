@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 export function Header() {
-  const countries = ["México", "Brasil", "Argentina", "Chile", "Colombia", "Perú"]
-
   return (
     <header className="header-component sticky top-0 z-50 w-full border-b">
       <div className="container mx-auto px-4">
@@ -38,24 +36,6 @@ export function Header() {
             >
               Reviews
             </Link>
-            <div className="relative group">
-              <button className="text-sm font-medium text-header-footer-text hover:text-primary transition-colors">
-                Países
-              </button>
-              <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <div className="py-2">
-                  {countries.map((country) => (
-                    <Link
-                      key={country}
-                      href={`/country/${country.toLowerCase()}`}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary hover:text-white transition-colors"
-                    >
-                      {country}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
           </nav>
 
           {/* Search */}
