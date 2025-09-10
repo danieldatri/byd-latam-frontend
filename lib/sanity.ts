@@ -36,7 +36,7 @@ export const articlesQuery = `
       },
       alt
     },
-    category->{
+    categories[0]->{
       _id,
       title,
       color
@@ -79,7 +79,7 @@ export const featuredArticlesQuery = `
       },
       alt
     },
-    category->{
+    categories[0]->{
       _id,
       title,
       color
@@ -116,7 +116,7 @@ export const articleBySlugQuery = `
       },
       alt
     },
-    category->{
+    categories[0]->{
       _id,
       title,
       color
@@ -192,7 +192,7 @@ export const postsByCountryQuery = `
       },
       alt
     },
-    category->{
+    categories[0]->{
       _id,
       title,
       color

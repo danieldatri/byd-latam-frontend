@@ -21,6 +21,7 @@ function extractTextFromBody(body: any[]): string {
     .slice(0, 200) + '...'
 }
 
+import * as React from "react";
 interface ArticleCardProps {
   article: {
     _id: string
@@ -42,7 +43,7 @@ interface ArticleCardProps {
       }
       alt?: string
     } | null
-    category?: {
+    categories?: {
       _id: string
       title: string
       color: string
@@ -90,15 +91,15 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
             </div>
           )}
           <div className="absolute top-4 left-4 flex gap-2">
-            {article.category && (
-              <Badge 
-                variant="secondary" 
-                className="text-white"
-                style={{ backgroundColor: article.category.color }}
-              >
-                {article.category.title}
-              </Badge>
-            )}
+        {article.categories && (
+                <Badge 
+                  variant="secondary" 
+                  className="text-white"
+          style={{ backgroundColor: article.categories?.color as string }}
+                >
+          {article.categories?.title}
+                </Badge>
+              )}
             {(featured || article.featured) && (
               <Badge variant="secondary" className="bg-accent text-accent-foreground">
                 Destacado

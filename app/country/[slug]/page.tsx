@@ -1,3 +1,4 @@
+import * as React from "react";
 import { notFound } from "next/navigation"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
