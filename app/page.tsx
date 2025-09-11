@@ -1,3 +1,4 @@
+import * as React from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ArticleCard } from "@/components/article-card"
@@ -52,11 +53,9 @@ export default async function HomePage() {
               </div>
               {featuredArticles && featuredArticles.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="md:col-span-2">
-                    <ArticleCard article={featuredArticles[0]} featured />
-                  </div>
-                  {featuredArticles[1] && <ArticleCard article={featuredArticles[1]} />}
-                  {featuredArticles[2] && <ArticleCard article={featuredArticles[2]} />}
+                  {featuredArticles.map((article: Post) => (
+                    <ArticleCard article={article} featured key={article._id} />
+                  ))}
                 </div>
               ) : (
                 <div className="text-center py-8 text-muted-foreground">
@@ -71,7 +70,7 @@ export default async function HomePage() {
               {recentNonFeatured && recentNonFeatured.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {recentNonFeatured.map((article: Post) => (
-                    <ArticleCard key={article._id} article={article} />
+                    <ArticleCard article={article} key={article._id} />
                   ))}
                 </div>
               ) : (

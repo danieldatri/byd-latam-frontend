@@ -67,14 +67,13 @@ interface ArticleCardProps {
 }
 
 export function ArticleCard({ article, featured = false }: ArticleCardProps) {
-  const cardSize = featured ? "md:col-span-2" : ""
-  const imageHeight = featured ? "h-64" : "h-48"
+  const imageHeight = "h-48";
   
   // Generar excerpt si no existe
   const displayExcerpt = article.excerpt || extractTextFromBody(article.body)
 
   return (
-    <Card className={`group hover:shadow-lg transition-all duration-300 ${cardSize}`}>
+  <Card className="group hover:shadow-lg transition-all duration-300">
       <Link href={`/article/${article.slug.current}`}>
         <div className="relative overflow-hidden rounded-t-lg">
           {article.mainImage ? (
