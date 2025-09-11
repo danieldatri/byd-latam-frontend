@@ -4,6 +4,7 @@ import { ArticleCard } from "@/components/article-card"
 import { AdBanner } from "@/components/ad-banner"
 import { HeroBanner } from "@/components/hero-banner"
 import { Button } from "@/components/ui/button"
+import { RegionsQuickAccess } from "@/components/countries-quick-access"
 import { ArrowRight, TrendingUp } from "lucide-react"
 import { getAllPosts, getFeaturedPosts, getAllCountries, Post } from "@/lib/sanity"
 
@@ -101,34 +102,8 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              {/* Countries Quick Access */}
-              <div className="bg-card p-6 rounded-lg border">
-                <h3 className="font-playfair text-xl font-bold mb-3">Países</h3>
-                <div className="space-y-2">
-                  {countries && countries.length > 0 ? (
-                    countries.map((country: any) => (
-                      <a
-                        key={country._id}
-                        href={`/country/${country.slug.current}`}
-                        className="flex items-center gap-2 text-sm hover:text-primary transition-colors py-1"
-                      >
-                        {country.emoji && <span>{country.emoji}</span>}
-                        {country.name}
-                      </a>
-                    ))
-                  ) : (
-                    ["México", "Brasil", "Argentina", "Chile", "Colombia", "Perú", "Uruguay"].map((country) => (
-                      <a
-                        key={country}
-                        href={`/country/${country.toLowerCase()}`}
-                        className="block text-sm hover:text-primary transition-colors py-1"
-                      >
-                        {country}
-                      </a>
-                    ))
-                  )}
-                </div>
-              </div>
+              {/* Regions Quick Access */}
+              <RegionsQuickAccess regions={countries} />
             </div>
           </div>
         </div>

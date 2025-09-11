@@ -1,11 +1,10 @@
 import { notFound } from "next/navigation"
 import Image from "next/image"
-import Link from "next/link"
-import { Calendar, MapPin, ArrowLeft, User } from "lucide-react"
+import { Calendar, MapPin, User } from "lucide-react"
+import { BackLink } from "@/components/back-link"
 import { getPostBySlug, urlFor } from "@/lib/sanity"
 import { PortableTextRenderer } from "@/components/portable-text-renderer"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 
@@ -27,45 +26,45 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <Header />
       
       <main className="container mx-auto px-4 py-8 max-w-4xl">
-        {/* Back Button */}
-        <div className="mb-6">
-          <Button variant="outline" asChild>
-            <Link href="/">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Volver al inicio
-            </Link>
-          </Button>
-        </div>
+  {/* Back link with icon */}
+  <BackLink />
 
         <article>
           {/* Article Hero: text over low-opacity image */}
           <header className="relative mb-8 overflow-hidden rounded-xl border">
 
             <div className="relative p-6 md:p-10 bg-gradient-to-br from-background via-gray-100 to-gray-200/80">
-              <div className="flex flex-wrap gap-2 mb-4">
-                {post.category && (
+              {/* Category badge above title, left aligned */}
+              {post.categories && (
+                <div className="mb- flex items-center">
                   <Badge
                     variant="secondary"
-                    className="text-white"
-                    style={{ backgroundColor: post.category.color }}
+                    className="px-4 py-1 text-base font-semibold"
+                    style={{ backgroundColor: post.categories?.color }}
                   >
-                    {post.category.title}
+                    {post.categories?.title}
                   </Badge>
-                )}
-                {post.tags?.map((tag: any) => (
-                  <Badge
-                    key={tag.title}
-                    variant="outline"
-                    style={{ borderColor: tag.color, color: tag.color }}
-                  >
-                    {tag.title}
-                  </Badge>
-                ))}
-              </div>
+                </div>
+              )}
 
               <h1 className="font-playfair text-3xl md:text-4xl font-bold mb-6 text-gray-900">
                 {post.title}
               </h1>
+
+              {/* Tags below title, left aligned */}
+              {post.tags?.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {post.tags.map((tag: any) => (
+                    <Badge
+                      key={tag.title}
+                      variant="outline"
+                      style={{ borderColor: tag.color, color: tag.color }}
+                    >
+                      {tag.title}
+                    </Badge>
+                  ))}
+                </div>
+              )}
 
               <div className="flex flex-wrap items-center gap-6 text-gray-900">
                 <div className="flex items-center gap-2">
