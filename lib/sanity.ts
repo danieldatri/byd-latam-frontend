@@ -102,7 +102,19 @@ export const articleBySlugQuery = `
     title,
     slug,
     excerpt,
-    body,
+    body[]{
+      ...,
+      markDefs[]{
+        ...,
+        _type == "internalLink" => {
+          ...,
+          reference->{
+            _id,
+            slug
+          }
+        }
+      }
+    },
     publishedAt,
     country->{
       _id,

@@ -38,78 +38,66 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         </div>
 
         <article>
-          {/* Article Header */}
-          <header className="mb-8">
-            <div className="flex flex-wrap gap-2 mb-4">
-              {post.category && (
-                <Badge 
-                  variant="secondary"
-                  className="text-white"
-                  style={{ backgroundColor: post.category.color }}
-                >
-                  {post.category.title}
-                </Badge>
-              )}
-              {post.tags?.map((tag: any) => (
-                <Badge 
-                  key={tag.title}
-                  variant="outline"
-                  style={{ borderColor: tag.color, color: tag.color }}
-                >
-                  {tag.title}
-                </Badge>
-              ))}
-            </div>
-            
-            <h1 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-gray-900">
-              {post.title}
-            </h1>
-            
-            <div className="flex flex-wrap items-center gap-6 text-gray-600 mb-6">
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                <span>{new Date(post.publishedAt).toLocaleDateString("es-ES", {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
-                <span className="flex items-center gap-1">
-                  {post.country?.emoji && <span>{post.country.emoji}</span>}
-                  {post.country?.name || 'Sin país'}
-                </span>
-              </div>
-              {post.author && (
-                <div className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  <span>Por {post.author.name}</span>
-                </div>
-              )}
-            </div>
+          {/* Article Hero: text over low-opacity image */}
+          <header className="relative mb-8 overflow-hidden rounded-xl border">
 
-            <p className="text-xl text-gray-600 leading-relaxed mb-8">
-              {post.excerpt}
-            </p>
+            <div className="relative p-6 md:p-10 bg-gradient-to-br from-background via-gray-100 to-gray-200/80">
+              <div className="flex flex-wrap gap-2 mb-4">
+                {post.category && (
+                  <Badge
+                    variant="secondary"
+                    className="text-white"
+                    style={{ backgroundColor: post.category.color }}
+                  >
+                    {post.category.title}
+                  </Badge>
+                )}
+                {post.tags?.map((tag: any) => (
+                  <Badge
+                    key={tag.title}
+                    variant="outline"
+                    style={{ borderColor: tag.color, color: tag.color }}
+                  >
+                    {tag.title}
+                  </Badge>
+                ))}
+              </div>
+
+              <h1 className="font-playfair text-3xl md:text-4xl font-bold mb-6 text-gray-900">
+                {post.title}
+              </h1>
+
+              <div className="flex flex-wrap items-center gap-6 text-gray-900">
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4" />
+                  <span>{new Date(post.publishedAt).toLocaleDateString("es-ES", {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4" />
+                  <span className="flex items-center gap-1">
+                    {post.country?.emoji && <span>{post.country.emoji}</span>}
+                    {post.country?.name || 'Sin país'}
+                  </span>
+                </div>
+                {post.author && (
+                  <div className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    <span>Por {post.author.name}</span>
+                  </div>
+                )}
+              </div>
+            </div>
           </header>
 
-          {/* Featured Image */}
-          {post.featuredImage && (
-            <div className="mb-8">
-              <Image
-                src={post.featuredImage.asset.url || urlFor(post.featuredImage).url()}
-                alt={post.featuredImage.alt || post.title}
-                width={1200}
-                height={600}
-                className="w-full h-[400px] md:h-[500px] object-cover rounded-lg shadow-lg"
-              />
-              {post.featuredImage.alt && (
-                <p className="text-sm text-gray-500 mt-2 text-center italic">
-                  {post.featuredImage.alt}
-                </p>
-              )}
-            </div>
+          {/* Intro/Excerpt below hero */}
+          {post.excerpt && (
+            <p className="text-xl text-gray-600 leading-relaxed mb-8 text-justify">
+              {post.excerpt}
+            </p>
           )}
 
           {/* Article Content */}

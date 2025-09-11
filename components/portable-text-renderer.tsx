@@ -50,6 +50,20 @@ const components = {
         {children}
       </a>
     ),
+    internalLink: ({ value, children }: any) => {
+      // Defensive: check reference and slug
+      const slug = value?.reference?.slug?.current
+      return slug ? (
+        <a
+          href={`/article/${slug}`}
+          className="text-primary underline hover:text-primary/80"
+        >
+          {children}
+        </a>
+      ) : (
+        <span className="text-gray-400 cursor-not-allowed">{children}</span>
+      )
+    },
   },
 }
 
