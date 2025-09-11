@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Inter, JetBrains_Mono } from "next/font/google"
 import { Playfair_Display } from "next/font/google"
 // import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Suspense } from "react"
 import "./globals.css"
 
@@ -45,6 +46,7 @@ export default function RootLayout({
       <body className={`font-sans ${inter.variable} ${jetbrainsMono.variable} ${playfair.variable} antialiased`}>
         <Suspense fallback={null}>{children}</Suspense>
         {/* <Analytics /> */}
+        <SpeedInsights />
       </body>
     </html>
   )
