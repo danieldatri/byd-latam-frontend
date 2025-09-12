@@ -47,7 +47,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 </div>
               )}
 
-              <h1 className="font-playfair text-3xl md:text-4xl font-bold mb-6 text-gray-900">
+              <h1 className="font-playfair text-2xl md:text-4xl font-bold mb-6 text-gray-900">
                 {post.title}
               </h1>
 
