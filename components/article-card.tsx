@@ -90,15 +90,15 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
             </div>
           )}
           <div className="absolute top-4 left-4 flex gap-2">
-        {article.categories && (
-                <Badge 
-                  variant="secondary" 
-                  className="text-white"
-          style={{ backgroundColor: article.categories?.color as string }}
-                >
-          {article.categories?.title}
-                </Badge>
-              )}
+            {Array.isArray(article.categories) && article.categories.length > 0 && (
+              <Badge
+                variant="secondary"
+                className="text-white"
+                style={{ backgroundColor: article.categories[0].color }}
+              >
+                {article.categories[0].title}
+              </Badge>
+            )}
             {(featured || article.featured) && (
               <Badge variant="secondary" className="bg-accent text-accent-foreground">
                 Destacado
