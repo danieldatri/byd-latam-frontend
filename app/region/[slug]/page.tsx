@@ -10,14 +10,15 @@ import { RegionsQuickAccess } from "@/components/countries-quick-access";
 import type { Metadata } from "next";
 
 interface RegionPageProps {
-  params: {
-    slug: string;
-  };
+  // Params can be a complex type in Next's generated types; use `any` here
+  // to satisfy the framework's PageProps checks while keeping runtime behavior.
+  params: any;
 }
 
 export async function generateMetadata({ params }: RegionPageProps): Promise<Metadata> {
+  const { slug } = (await params) as { slug: string }
   const countries = await getAllCountries();
-  const country = countries.find((c: Country) => c.slug.current === params.slug);
+  const country = countries.find((c: Country) => c.slug.current === slug);
   if (!country) {
     return {
       title: "BYD Latam News - Región no encontrada",
@@ -33,14 +34,15 @@ export async function generateMetadata({ params }: RegionPageProps): Promise<Met
 }
 
 export default async function RegionPage({ params }: RegionPageProps) {
+  const { slug } = (await params) as { slug: string }
   const countries = await getAllCountries();
-  const country = countries.find((c: Country) => c.slug.current === params.slug);
+  const country = countries.find((c: Country) => c.slug.current === slug);
 
   if (!country) {
     notFound();
   }
 
-  const posts = await getPostsByCountry(params.slug);
+  const posts = await getPostsByCountry(slug);
 
   return (
     <div className="min-h-screen bg-background">

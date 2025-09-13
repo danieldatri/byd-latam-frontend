@@ -9,13 +9,14 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 
 interface ArticlePageProps {
-  params: {
-    slug: string
-  }
+  // params can be a promise-like type per Next's generated types; use any here
+  params: any
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  const post = await getPostBySlug(params.slug)
+  // Next requires awaiting params before accessing dynamic params properties
+  const { slug } = (await params) as { slug: string }
+  const post = await getPostBySlug(slug)
 
   if (!post) {
     notFound()

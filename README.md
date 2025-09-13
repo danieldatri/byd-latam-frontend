@@ -1,215 +1,215 @@
 # BYD Latam News Frontend
 
-Un sitio web de noticias moderno sobre BYD en Latinoamérica, construido con Next.js 14, TypeScript, Tailwind CSS y Sanity.io.
+A modern news website about BYD in Latin America, built with Next.js 14, TypeScript, Tailwind CSS, and Sanity.io.
 
-## 🚀 Tecnologías Utilizadas
+## 🚀 Technologies Used
 
-- **Next.js 14** - Framework de React con App Router
-- **TypeScript** - Tipado estático
-- **Tailwind CSS** - Framework de CSS utilitario
-- **Sanity.io** - CMS headless
-- **Radix UI** - Componentes de UI accesibles
-- **Lucide React** - Iconos modernos
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Static typing
+- **Tailwind CSS** - Utility-first CSS framework
+- **Sanity.io** - Headless CMS
+- **Radix UI** - Accessible UI components
+- **Lucide React** - Modern icons
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
-\`\`\`
-├── app/                    # App Router de Next.js
+```
+├── app/                    # Next.js App Router
 │   ├── article/[slug]/    # Individual article pages
 │   ├── news/              # News listing page
 │   └── country/[slug]/    # News pages by country
-├── components/            # Componentes reutilizables
-│   ├── ui/               # Componentes de UI base
-│   ├── article-card.tsx  # Tarjeta de artículo
-│   ├── header.tsx        # Cabecera del sitio
-│   └── footer.tsx        # Pie de página
-├── lib/                  # Utilidades y configuración
-│   └── sanity.ts        # Cliente y consultas de Sanity
-├── sanity/              # Esquemas de Sanity
-│   └── schemas/         # Definiciones de tipos de contenido
-└── public/              # Archivos estáticos
-\`\`\`
+├── components/            # Reusable components
+│   ├── ui/               # Base UI components
+│   ├── article-card.tsx  # Article card
+│   ├── header.tsx        # Site header
+│   └── footer.tsx        # Site footer
+├── lib/                  # Utilities and configuration
+│   └── sanity.ts        # Sanity client and queries
+├── sanity/              # Sanity schemas
+│   └── schemas/         # Content type definitions
+└── public/              # Static files
+```
 
-## 🛠️ Instalación y Configuración
+## 🛠️ Installation & Setup
 
-### 1. Clonar el repositorio
+### 1. Clone the repository
 
-\`\`\`bash
-git clone <url-del-repositorio>
+```bash
+git clone <repository-url>
 cd byd-latam-frontend
-\`\`\`
+```
 
-### 2. Instalar dependencias
+### 2. Install dependencies
 
-\`\`\`bash
+```bash
 npm install
-\`\`\`
+```
 
-### 3. Configurar variables de entorno
+### 3. Configure environment variables
 
-Crea un archivo `.env.local` basado en `.env.local.example`:
+Create a `.env.local` file based on `.env.local.example`:
 
-\`\`\`bash
+```bash
 cp .env.local.example .env.local
-\`\`\`
+```
 
-Completa las variables de Sanity en `.env.local`:
+Fill in the Sanity variables in `.env.local`:
 
-\`\`\`env
-NEXT_PUBLIC_SANITY_PROJECT_ID=tu-project-id
+```env
+NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
 NEXT_PUBLIC_SANITY_DATASET=production
 NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
-\`\`\`
+```
 
-### 4. Configurar Sanity.io
+### 4. Set up Sanity.io
 
-#### Opción A: Crear un nuevo proyecto en Sanity
+#### Option A: Create a new project on Sanity
 
-1. Ve a [sanity.io](https://sanity.io) y crea una cuenta
-2. Crea un nuevo proyecto
-3. Anota el Project ID
-4. Configura el dataset (generalmente "production")
+1. Go to [sanity.io](https://sanity.io) and create an account
+2. Create a new project
+3. Note the Project ID
+4. Set up the dataset (usually "production")
 
-#### Opción B: Usar Sanity CLI (recomendado)
+#### Option B: Use Sanity CLI (recommended)
 
-\`\`\`bash
+```bash
 npm install -g @sanity/cli
 sanity init
-\`\`\`
+```
 
-Sigue las instrucciones para crear un nuevo proyecto o conectarte a uno existente.
+Follow the instructions to create a new project or connect to an existing one.
 
-### 5. Configurar esquemas en Sanity Studio
+### 5. Set up schemas in Sanity Studio
 
-Los esquemas ya están definidos en `sanity/schemas/`. Incluyen:
+Schemas are already defined in `sanity/schemas/`. They include:
 
-- **Post** - Artículos de noticias
-- **Author** - Autores
-- **Category** - Categorías de noticias  
-- **Country** - Países de Latinoamérica
-- **Tag** - Etiquetas
-- **Block Content** - Contenido enriquecido
+- **Post** - News articles
+- **Author** - Authors
+- **Category** - News categories
+- **Country** - Latin American countries
+- **Tag** - Tags
+- **Block Content** - Rich content
 
-### 6. Ejecutar en desarrollo
+### 6. Run in development
 
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
-El sitio estará disponible en `http://localhost:3000`
+The site will be available at `http://localhost:3000`
 
-## 📊 Esquemas de Contenido
+## 📊 Content Schemas
 
-### Post (Artículo)
-- Título, slug, extracto
-- Imagen destacada
-- Contenido enriquecido
-- Autor, categoría, etiquetas
-- País, fecha de publicación
-- Estado destacado
+### Post (Article)
+- Title, slug, excerpt
+- Featured image
+- Rich content
+- Author, category, tags
+- Country, publication date
+- Featured status
 
-### Author (Autor)
-- Nombre, slug, biografía
-- Imagen de perfil
-- Información social
+### Author
+- Name, slug, biography
+- Profile image
+- Social information
 
-### Category (Categoría)
-- Título, slug, descripción
-- Color identificativo
+### Category
+- Title, slug, description
+- Identifier color
 
-### Country (País)
-- Nombre en español
-- Slug para URLs
-- Emoji/bandera
+### Country
+- Name in Spanish
+- Slug for URLs
+- Emoji/flag
 
-## 🎨 Personalización de Diseño
+## 🎨 Design Customization
 
-El sitio utiliza Tailwind CSS con un sistema de diseño personalizado:
+The site uses Tailwind CSS with a custom design system:
 
-- **Fuentes**: Geist (sans-serif) y Playfair Display (serif)
-- **Colores**: Sistema de colores personalizable
-- **Componentes**: Basados en Radix UI
+- **Fonts**: Geist (sans-serif) and Playfair Display (serif)
+- **Colors**: Customizable color system
+- **Components**: Based on Radix UI
 - **Responsive**: Mobile-first design
 
-### Colores de Categorías
+### Category Colors
 
-Las categorías incluyen colores predefinidos:
-- Cyan: Lanzamientos
-- Pink: Análisis  
-- Verde: Ventas
-- Naranja: Eventos
-- Púrpura: Tecnología
-- Gris: General
+Categories include predefined colors:
+- Cyan: Launches
+- Pink: Analysis
+- Green: Sales
+- Orange: Events
+- Purple: Technology
+- Gray: General
 
 ## 🚀 Deployment
 
-### Vercel (Recomendado)
+### Vercel (Recommended)
 
-1. Conecta tu repositorio a Vercel
-2. Configura las variables de entorno
-3. Despliega automáticamente
+1. Connect your repository to Vercel
+2. Set up environment variables
+3. Deploy automatically
 
-### Otros proveedores
+### Other providers
 
-El proyecto es compatible con cualquier proveedor que soporte Next.js:
+The project is compatible with any provider that supports Next.js:
 - Netlify
 - Railway
 - Heroku
 - AWS Amplify
 
-## 📱 Funcionalidades
+## 📱 Features
 
-### ✅ Implementadas
+### ✅ Implemented
 
-- [x] Página principal con artículos destacados
-- [x] Listado de todas las noticias
-- [x] Páginas individuales de artículos
-- [x] Filtrado por país
-- [x] Diseño responsive
-- [x] Header con opacidad
-- [x] Footer centrado
-- [x] Integración con Sanity.io
-- [x] Renderizado de contenido enriquecido
-- [x] SEO optimizado
+- [x] Main page with featured articles
+- [x] All news listing
+- [x] Individual article pages
+- [x] Country filtering
+- [x] Responsive design
+- [x] Header with opacity
+- [x] Centered footer
+- [x] Sanity.io integration
+- [x] Rich content rendering
+- [x] SEO optimized
 
-### 🔄 Próximas funcionalidades
+### 🔄 Upcoming features
 
-- [ ] Búsqueda de artículos
-- [ ] Filtros por categoría
+- [ ] Article search
+- [ ] Category filters
 - [ ] Newsletter
-- [ ] Comentarios
-- [ ] Compartir en redes sociales
+- [ ] Comments
+- [ ] Social sharing
 - [ ] PWA (Progressive Web App)
 - [ ] Analytics
-- [ ] Sitemap automático
+- [ ] Automatic sitemap
 
-## 🧪 Scripts Disponibles
+## 🧪 Available Scripts
 
-\`\`\`bash
-npm run dev      # Desarrollo
-npm run build    # Compilación
-npm run start    # Producción
+```bash
+npm run dev      # Development
+npm run build    # Build
+npm run start    # Production
 npm run lint     # Linting
-\`\`\`
+```
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está bajo la licencia MIT.
+This project is licensed under the MIT license.
 
-## 🤝 Contribuir
+## 🤝 Contributing
 
-Las contribuciones son bienvenidas. Por favor:
+Contributions are welcome. Please:
 
-1. Haz fork del proyecto
-2. Crea una rama para tu feature
-3. Commit tus cambios
-4. Push a la rama
-5. Abre un Pull Request
+1. Fork the project
+2. Create a branch for your feature
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
 
-## 📞 Soporte
+## 📞 Support
 
-Si tienes preguntas o necesitas ayuda:
+If you have questions or need help:
 
-1. Revisa la documentación de [Next.js](https://nextjs.org/docs)
-2. Consulta la documentación de [Sanity.io](https://www.sanity.io/docs)
-3. Abre un issue en el repositorio
+1. Check the [Next.js documentation](https://nextjs.org/docs)
+2. See the [Sanity.io documentation](https://www.sanity.io/docs)
+3. Open an issue in the repository
