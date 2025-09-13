@@ -13,7 +13,7 @@ Un sitio web de noticias moderno sobre BYD en Latinoamérica, construido con Nex
 
 ## 📁 Estructura del Proyecto
 
-```
+\`\`\`
 ├── app/                    # App Router de Next.js
 │   ├── article/[slug]/    # Individual article pages
 │   ├── news/              # News listing page
@@ -28,38 +28,38 @@ Un sitio web de noticias moderno sobre BYD en Latinoamérica, construido con Nex
 ├── sanity/              # Esquemas de Sanity
 │   └── schemas/         # Definiciones de tipos de contenido
 └── public/              # Archivos estáticos
-```
+\`\`\`
 
 ## 🛠️ Instalación y Configuración
 
 ### 1. Clonar el repositorio
 
-```bash
+\`\`\`bash
 git clone <url-del-repositorio>
 cd byd-latam-frontend
-```
+\`\`\`
 
 ### 2. Instalar dependencias
 
-```bash
+\`\`\`bash
 npm install
-```
+\`\`\`
 
 ### 3. Configurar variables de entorno
 
 Crea un archivo `.env.local` basado en `.env.local.example`:
 
-```bash
+\`\`\`bash
 cp .env.local.example .env.local
-```
+\`\`\`
 
 Completa las variables de Sanity en `.env.local`:
 
-```env
+\`\`\`env
 NEXT_PUBLIC_SANITY_PROJECT_ID=tu-project-id
 NEXT_PUBLIC_SANITY_DATASET=production
 NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
-```
+\`\`\`
 
 ### 4. Configurar Sanity.io
 
@@ -72,10 +72,10 @@ NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
 
 #### Opción B: Usar Sanity CLI (recomendado)
 
-```bash
+\`\`\`bash
 npm install -g @sanity/cli
 sanity init
-```
+\`\`\`
 
 Sigue las instrucciones para crear un nuevo proyecto o conectarte a uno existente.
 
@@ -92,9 +92,9 @@ Los esquemas ya están definidos en `sanity/schemas/`. Incluyen:
 
 ### 6. Ejecutar en desarrollo
 
-```bash
+\`\`\`bash
 npm run dev
-```
+\`\`\`
 
 El sitio estará disponible en `http://localhost:3000`
 
@@ -185,12 +185,12 @@ El proyecto es compatible con cualquier proveedor que soporte Next.js:
 
 ## 🧪 Scripts Disponibles
 
-```bash
+\`\`\`bash
 npm run dev      # Desarrollo
 npm run build    # Compilación
 npm run start    # Producción
 npm run lint     # Linting
-```
+\`\`\`
 
 ## 📄 Licencia
 
