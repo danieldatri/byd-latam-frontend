@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { MapPin } from "lucide-react";
 import { getPostsByCountry, getAllCountries, Post, Country } from "@/lib/sanity";
 import { RegionsQuickAccess } from "@/components/countries-quick-access";
+import { NoArticles } from "@/components/no-articles";
 import type { Metadata } from "next";
 
 interface RegionPageProps {
@@ -76,12 +77,11 @@ export default async function RegionPage({ params }: RegionPageProps) {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-12">
-                <div className="text-6xl mb-4">{country.emoji || "🌎"}</div>
-                <h3 className="text-xl font-semibold mb-2">
-                  No hay artículos disponibles para esta región
-                </h3>
-              </div>
+              <NoArticles
+                emoji={country.emoji || "🌎"}
+                message="No hay artículos disponibles para esta región"
+                subtitle="Aún no hay contenido publicado para esta región. Vuelve pronto para ver las últimas noticias."
+              />
             )}
           </div>
           {/* Sidebar */}

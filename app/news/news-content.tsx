@@ -4,6 +4,7 @@ import {ArticleCard} from "@/components/article-card";
 import {Button} from "@/components/ui/button";
 import {Grid} from "lucide-react";
 import {Category, Country, Post} from "@/lib/sanity";
+import { NoArticles } from "@/components/no-articles";
 
 interface NewsContentProps {
   allPosts: Post[];
@@ -107,13 +108,7 @@ export const NewsContent: React.FC<NewsContentProps> = ({ allPosts, categories, 
 
       {/* No Articles Message */}
       {filteredPosts && filteredPosts.length === 0 && (
-        <div className="text-center py-12">
-          <div className="text-gray-400 text-6xl mb-4">📰</div>
-          <h3 className="text-xl font-semibold mb-2">No hay artículos disponibles</h3>
-          <p className="text-gray-600">
-            Aún no hay contenido publicado. Vuelve pronto para ver las últimas noticias.
-          </p>
-        </div>
+        <NoArticles />
       )}
 
       {/* Load More Button */}
