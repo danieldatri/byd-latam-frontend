@@ -1,9 +1,9 @@
 "use client";
-import React, { useState } from "react";
-import { ArticleCard } from "@/components/article-card";
-import { Button } from "@/components/ui/button";
-import { Filter, Grid } from "lucide-react";
-import { Post, Category, Country } from "@/lib/sanity";
+import React, {useState} from "react";
+import {ArticleCard} from "@/components/article-card";
+import {Button} from "@/components/ui/button";
+import {Grid} from "lucide-react";
+import {Category, Country, Post} from "@/lib/sanity";
 
 interface NewsContentProps {
   allPosts: Post[];
@@ -37,80 +37,49 @@ export const NewsContent: React.FC<NewsContentProps> = ({ allPosts, categories, 
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-      {/* Sidebar - Filters */}
-      <div className="lg:col-span-1">
-        <div className="sticky top-24 space-y-6">
-          {/* Categories Filter */}
-          <div className="bg-card p-6 rounded-lg border">
-            <h3 className="font-playfair text-xl font-bold mb-4 flex items-center gap-2">
-              <Filter className="h-5 w-5" />
-              Categorías
-            </h3>
-            <div className="space-y-2">
-              <Button
-                variant={selectedCategory === null ? "default" : "ghost"}
-                className="w-full justify-start text-left"
-                onClick={() => setSelectedCategory(null)}
-              >
-                Todas las categorías
-              </Button>
-              {categories.map((category: Category) => (
-                <Button
-                  key={category._id}
-                  variant={selectedCategory === category._id ? "default" : "ghost"}
-                  className="w-full justify-start text-left"
-                  onClick={() => setSelectedCategory(category._id)}
-                >
-                  <div
-                    className="w-3 h-3 rounded-full mr-2"
-                    style={{ backgroundColor: category.color }}
-                  />
-                  {category.title}
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          {/* Countries Filter */}
-          <div className="bg-card p-6 rounded-lg border">
-            <h3 className="font-playfair text-xl font-bold mb-4">Países</h3>
-            <div className="space-y-2">
-              <Button
-                variant={selectedCountry === null ? "default" : "ghost"}
-                className="w-full justify-start text-left"
-                onClick={() => setSelectedCountry(null)}
-              >
-                Todos los países
-              </Button>
-              {countries.map((country: Country) => (
-                <Button
-                  key={country._id}
-                  variant={selectedCountry === country._id ? "default" : "ghost"}
-                  className="w-full justify-start text-left"
-                  onClick={() => setSelectedCountry(country._id)}
-                >
-                  {country.emoji && <span className="mr-2">{country.emoji}</span>}
-                  {country.name}
-                </Button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="lg:col-span-3">
-        {/* Results Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-2">
-            <Grid className="h-5 w-5" />
-            <span className="text-sm text-gray-600">
-              {filteredPosts.length} artículos encontrados
-            </span>
-          </div>
+    <div className="min-h-screen">
+      {/* Filter Bar */}
+      <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-8 bg-card p-4 rounded-lg border">
+        {/* Category Filter */}
+        <div className="flex flex-col">
+          <label htmlFor="category-select" className="text-sm font-semibold mb-1">Categoría</label>
           <select
-            className="px-3 py-2 border rounded-md text-sm"
+            id="category-select"
+            className="px-3 py-2 border rounded-md text-sm min-w-[160px]"
+            value={selectedCategory ?? ""}
+            onChange={e => setSelectedCategory(e.target.value || null)}
+          >
+            <option value="">Todas las categorías</option>
+            {categories.map((category: Category) => (
+              <option key={category._id} value={category._id}>
+                {category.title}
+              </option>
+            ))}
+          </select>
+        </div>
+        {/* Region Filter (was Country) */}
+        <div className="flex flex-col">
+          <label htmlFor="country-select" className="text-sm font-semibold mb-1">Región</label>
+          <select
+            id="country-select"
+            className="px-3 py-2 border rounded-md text-sm min-w-[160px]"
+            value={selectedCountry ?? ""}
+            onChange={e => setSelectedCountry(e.target.value || null)}
+          >
+            <option value="">Todas las regiones</option>
+            {countries.map((country: Country) => (
+              <option key={country._id} value={country._id}>
+                {country.emoji ? `${country.emoji} ` : ""}{country.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        {/* Order By Filter */}
+        <div className="flex flex-col">
+          <label htmlFor="order-select" className="text-sm font-semibold mb-1">Ordenar por</label>
+          <select
+            id="order-select"
+            className="px-3 py-2 border rounded-md text-sm min-w-[160px]"
             value={sortOrder}
             onChange={e => setSortOrder(e.target.value)}
           >
@@ -119,33 +88,42 @@ export const NewsContent: React.FC<NewsContentProps> = ({ allPosts, categories, 
             <option value="title">Título A-Z</option>
           </select>
         </div>
-
-        {/* Articles Grid */}
-        {filteredPosts && filteredPosts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {filteredPosts.map((article: Post) => (
-              <ArticleCard key={article._id} article={article} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12">
-            <div className="text-gray-400 text-6xl mb-4">📰</div>
-            <h3 className="text-xl font-semibold mb-2">No hay artículos disponibles</h3>
-            <p className="text-gray-600">
-              Aún no hay contenido publicado. Vuelve pronto para ver las últimas noticias.
-            </p>
-          </div>
-        )}
-
-        {/* Load More Button */}
-        {filteredPosts && filteredPosts.length > 0 && (
-          <div className="text-center mt-12">
-            <Button variant="outline" size="lg">
-              Cargar más artículos
-            </Button>
-          </div>
-        )}
       </div>
+
+      {/* Results Header */}
+      <div className="flex items-center gap-2 mb-6">
+        <Grid className="h-5 w-5" />
+        <span className="text-sm text-gray-600">
+          {filteredPosts.length} artículos encontrados
+        </span>
+      </div>
+
+      {/* Articles Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredPosts.map(article => (
+          <ArticleCard key={article._id} article={article} />
+        ))}
+      </div>
+
+      {/* No Articles Message */}
+      {filteredPosts && filteredPosts.length === 0 && (
+        <div className="text-center py-12">
+          <div className="text-gray-400 text-6xl mb-4">📰</div>
+          <h3 className="text-xl font-semibold mb-2">No hay artículos disponibles</h3>
+          <p className="text-gray-600">
+            Aún no hay contenido publicado. Vuelve pronto para ver las últimas noticias.
+          </p>
+        </div>
+      )}
+
+      {/* Load More Button */}
+      {filteredPosts && filteredPosts.length > 0 && (
+        <div className="text-center mt-12">
+          <Button variant="outline" size="lg">
+            Cargar más artículos
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
