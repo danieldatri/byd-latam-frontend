@@ -8,12 +8,62 @@ import { Badge } from "@/components/ui/badge"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ShareButtons } from "@/components/share-buttons"
+import {Metadata} from "next";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
 
 interface ArticlePageProps {
   // params can be a promise-like type per Next's generated types; use any here
   params: any
+}
+
+// Utility to extract plain text from Portable Text blocks
+function getBodyPreview(body: any, maxLength: number = 120): string {
+    if (!Array.isArray(body)) return "";
+    let text = "";
+    for (const block of body) {
+        if (block._type === "block" && Array.isArray(block.children)) {
+            text += block.children.map((child: any) => child.text).join("");
+            if (text.length >= maxLength) break;
+        }
+    }
+    return text.slice(0, maxLength).trim();
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }) : Promise<Metadata> {
+    const post = await getPostBySlug(params.slug);
+    if (!post) return {};
+
+    const imageUrl = post.mainImage?.asset
+        ? urlFor(post.mainImage).width(1200).height(630).url()
+        : `${BASE_URL}/placeholder.jpg`;
+
+    return {
+        title: post.title,
+        description: post.excerpt || "",
+        openGraph: {
+            title: post.title,
+            description: post.excerpt || "",
+            url: `${BASE_URL}/article/${post.slug.current}`,
+            siteName: "BYD Latam News",
+            images: [
+                {
+                    url: imageUrl,
+                    width: 1200,
+                    height: 630,
+                    alt: post.mainImage?.alt || post.title,
+                },
+            ],
+            locale: "es_ES",
+            type: "article",
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: post.title,
+            description: post.excerpt || "",
+            images: [imageUrl],
+        },
+    };
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
@@ -23,19 +73,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   if (!post) {
     notFound()
-  }
-
-  // Utility to extract plain text from Portable Text blocks
-  function getBodyPreview(body: any, maxLength: number = 120): string {
-    if (!Array.isArray(body)) return "";
-    let text = "";
-    for (const block of body) {
-      if (block._type === "block" && Array.isArray(block.children)) {
-        text += block.children.map((child: any) => child.text).join("");
-        if (text.length >= maxLength) break;
-      }
-    }
-    return text.slice(0, maxLength).trim();
   }
 
   return (
