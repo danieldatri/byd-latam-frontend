@@ -7,6 +7,9 @@ import { PortableTextRenderer } from "@/components/portable-text-renderer"
 import { Badge } from "@/components/ui/badge"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { ShareButtons } from "@/components/share-buttons"
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
 
 interface ArticlePageProps {
   // params can be a promise-like type per Next's generated types; use any here
@@ -25,7 +28,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <main className="container mx-auto px-4 py-8 max-w-4xl">
   {/* Back link with icon */}
   <BackLink />
@@ -104,6 +107,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <div className="prose prose-lg max-w-none">
             {post.body && <PortableTextRenderer content={post.body} />}
           </div>
+
+          {/* Share Buttons Section */}
+          <ShareButtons
+            url={`${BASE_URL}/article/${post.slug}`}
+            title={post.title}
+            description={post.excerpt || post.title}
+            image={post.mainImage ? urlFor(post.mainImage).width(1200).height(630).url() : `${BASE_URL}/placeholder.jpg`}
+          />
 
           {/* Author Bio */}
           {post.author && post.author.bio && (
