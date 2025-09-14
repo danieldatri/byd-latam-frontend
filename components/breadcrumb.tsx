@@ -17,8 +17,10 @@ export function Breadcrumb({ postTitle }: BreadcrumbProps) {
 
   function getReferrerLabel(url: string) {
     if (url.includes("/country/")) return "País";
-    if (url.includes("/article/")) return "Artículo";
-    if (url.includes("/news")) return "Noticias";
+    if (url.includes("/articles/")) return "Artículo";
+    if (url.includes("/article/")) return "Artículo"; // legacy
+    if (url.includes("/articles")) return "Artículos";
+    if (url.includes("/news")) return "Artículos"; // legacy
     return "Inicio";
   }
 

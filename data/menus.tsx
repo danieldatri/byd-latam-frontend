@@ -1,6 +1,6 @@
 export const links = [
   { name: "Inicio", href: "/", showInHeader: true, showInFooter: false },
-  { name: "News", href: "/news", showInHeader: true, showInFooter: true },
+  { name: "Artículos", href: "/articles", showInHeader: true, showInFooter: true },
   { name: "Reviews", href: "/reviews", showInHeader: true, showInFooter: true },
   { name: "Contacto", href: "/contacto", showInHeader: false, showInFooter: true },
   { name: "Sobre Nosotros", href: "/sobre-nosotros", showInHeader: false, showInFooter: true },
@@ -21,3 +21,9 @@ export const socialLinks = [
 export type MenuItem = typeof menuItems[number]
 export type QuickLink = typeof quickLinks[number]
 export type SocialLink = typeof socialLinks[number]
+
+export const __menuTypeCheck: { menu: MenuItem[]; quick: QuickLink[]; social: SocialLink[] } = {
+  menu: menuItems,
+  quick: quickLinks,
+  social: socialLinks,
+}

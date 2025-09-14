@@ -14,6 +14,7 @@ export interface FilterBarProps {
   initialCategory?: string | null;
   initialCountry?: string | null;
   initialSortOrder?: string;
+  foundCount?: number; // nuevo opcional
 }
 
 export const FilterBar: React.FC<FilterBarProps> = ({
@@ -24,6 +25,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   initialCategory = null,
   initialCountry = null,
   initialSortOrder = "newest",
+  foundCount,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(initialCountry);
@@ -98,7 +100,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       {/* Artículos encontrados count with Grid icon restored */}
       <div className="flex items-center gap-2 mb-2 w-full">
         <Grid className="h-5 w-5 text-muted-foreground" />
-        <span className="text-sm text-gray-600">{allPosts.length} artículos encontrados</span>
+        <span className="text-sm text-gray-600">{(foundCount ?? allPosts.length)} artículos encontrados</span>
       </div>
       {/* Category Filter (no label) */}
       <div className="flex flex-col">

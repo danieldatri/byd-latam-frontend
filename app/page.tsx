@@ -48,7 +48,7 @@ export default async function HomePage() {
                   Destacados
                 </h2>
                 <Button variant="outline" asChild>
-                  <a href="/news">
+                  <a href="/articles">
                     Ver todas <ArrowRight className="ml-2 h-4 w-4" />
                   </a>
                 </Button>

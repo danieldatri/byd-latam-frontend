@@ -79,7 +79,7 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0 animate-shine" style={{ background: "linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.2) 40%, transparent 90%)" }} />
       </div>
-      <Link href={`/article/${article.slug.current}`} className="block">
+      <Link href={`/articles/${article.slug.current}`} className="block">
         <div className="relative overflow-hidden rounded-t-lg">
           {article.mainImage ? (
             <Image

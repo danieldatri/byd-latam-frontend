@@ -6,13 +6,14 @@ import {Category, Country, Post} from "@/lib/sanity";
 import {NoArticles} from "@/components/no-articles";
 import {FilterBar} from "@/components/filter-bar";
 
-interface NewsContentProps {
+interface ArticlesContentProps {
   allPosts: Post[];
   categories: Category[];
   countries: Country[];
 }
 
-export const NewsContent: React.FC<NewsContentProps> = ({ allPosts, categories, countries }) => {
+// Renombrado desde NewsContent -> ArticlesContent
+export const ArticlesContent: React.FC<ArticlesContentProps> = ({ allPosts, categories, countries }) => {
   const [filteredPosts, setFilteredPosts] = useState<Post[]>(allPosts);
 
   const handleFilterChange = useCallback((posts: Post[]) => {
@@ -21,7 +22,7 @@ export const NewsContent: React.FC<NewsContentProps> = ({ allPosts, categories, 
 
   return (
     <div className="min-h-screen">
-      {/* Filter Bar (reusable component) */}
+      {/* Filter Bar */}
       <FilterBar
         categories={categories}
         countries={countries}
@@ -42,7 +43,7 @@ export const NewsContent: React.FC<NewsContentProps> = ({ allPosts, categories, 
         <NoArticles />
       )}
 
-      {/* Load More Button */}
+      {/* Load More Button (placeholder) */}
       {filteredPosts && filteredPosts.length > 0 && (
         <div className="text-center mt-12">
           <Button variant="outline" size="lg">
@@ -53,3 +54,4 @@ export const NewsContent: React.FC<NewsContentProps> = ({ allPosts, categories, 
     </div>
   );
 };
+

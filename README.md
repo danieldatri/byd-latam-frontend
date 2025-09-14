@@ -1,5 +1,142 @@
 # BYD Latam News Frontend
 
+A modern news website about BYD in Latin America, built with Next.js 15, TypeScript, Tailwind CSS, and Sanity.io.
+
+## 🔄 Route Migration Notice (2025)
+
+The routes have been consolidated:
+- `/news`   → permanently redirected to `/articles`
+- `/article/:slug` → permanently redirected to `/articles/:slug`
+
+Reasons:
+- Unificar nomenclatura (consistencia "articles").
+- Mejor SEO (una sola taxonomía principal).
+- Evitar contenido duplicado y enlaces dispersos.
+
+Legacy pages now issue server redirects. Update any external references if possible. Internal components & PortableText internal links now point to `/articles/...` exclusively.
+
+## 🚀 Technologies Used
+
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Static typing
+- **Tailwind CSS** - Utility-first CSS framework
+- **Sanity.io** - Headless CMS
+- **Radix UI** - Accessible UI components
+- **Lucide React** - Modern icons
+
+## 📁 Project Structure (Updated)
+
+```
+├── app/
+│   ├── articles/           # Listing & article pages
+│   │   ├── page.tsx        # /articles (list)
+│   │   ├── articles-content.tsx
+│   │   └── [slug]/page.tsx # /articles/:slug
+│   ├── article/[slug]/     # Legacy redirect (do not use)
+│   ├── news/               # Legacy redirect (do not use)
+│   └── region/[slug]/      # Regional listing
+├── components/
+│   ├── article-card.tsx
+│   ├── filter-bar.tsx
+│   ├── portable-text-renderer.tsx
+│   └── ...
+```
+
+> Note: `app/news/news-content.tsx` remains only as historical reference and is unused after migration. It can be safely removed in a cleanup step.
+
+## 🛠️ Installation & Setup
+
+### 1. Clone the repository
+
+```bash
+git clone <repository-url>
+cd byd-latam-frontend
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure environment variables
+
+Create a `.env.local` file based on `.env.local.example`:
+
+```bash
+cp .env.local.example .env.local
+```
+
+Fill in the Sanity variables in `.env.local`:
+
+```env
+NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
+NEXT_PUBLIC_SANITY_DATASET=production
+NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
+```
+
+### 4. Set up Sanity.io
+
+#### Option A: Create a new project on Sanity
+
+1. Go to [sanity.io](https://sanity.io) and create an account
+2. Create a new project
+3. Note the Project ID
+4. Set up the dataset (usually "production")
+
+#### Option B: Use Sanity CLI (recommended)
+
+```bash
+npm install -g @sanity/cli
+sanity init
+```
+
+Follow the instructions to create a new project or connect to an existing one.
+
+### 5. Set up schemas in Sanity Studio
+
+Schemas are already defined in `sanity/schemas/`. They include:
+
+- **Post** - News articles
+- **Author** - Authors
+- **Category** - News categories
+- **Country** - Latin American countries
+- **Tag** - Tags
+- **Block Content** - Rich content
+
+### 6. Run in development
+
+```bash
+npm run dev
+```
+
+Site: `http://localhost:3000`
+
+## 🧪 Testing
+
+Basic Jest + Testing Library setup.
+
+```bash
+npm test
+```
+
+Added migration test coverage:
+- ArticleCard links use `/articles/`.
+- PortableText internal links use `/articles/`.
+- next.config.mjs contains required redirects.
+
+## ✅ Feature Checklist (Adjusted)
+
+- [x] Article listing (`/articles`)
+- [x] Individual article page (`/articles/:slug`)
+- [x] Legacy redirects (`/news`, `/article/:slug`)
+
+(Original feature list retained below.)
+
+## 📄 Previous Sections
+
+# BYD Latam News Frontend
+
 A modern news website about BYD in Latin America, built with Next.js 14, TypeScript, Tailwind CSS, and Sanity.io.
 
 ## 🚀 Technologies Used
