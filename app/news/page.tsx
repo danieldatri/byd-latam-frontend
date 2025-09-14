@@ -15,11 +15,13 @@ export default async function NewsPage() {
       <Header />
       <main className="container mx-auto px-4 py-8">
         {/* Page Header */}
-        <div className="text-center mb-12">
-          <h1 className="font-playfair text-4xl md:text-5xl font-bold mb-4">
+        <div className="text-center mb-12 relative">
+          {/* Gradient background behind header content */}
+          <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary via-pink-500 to-secondary opacity-30 pointer-events-none rounded-lg" />
+          <h1 className="font-playfair text-4xl md:text-5xl font-bold mb-4 relative z-10 text-primary">
             Todas las Noticias
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto relative z-10">
             Mantente informado con las últimas noticias de BYD en Latinoamérica
           </p>
         </div>

@@ -52,17 +52,19 @@ export default async function RegionPage({ params }: RegionPageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-3">
             {/* Region Header */}
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="text-center mb-12 relative">
+              {/* Gradient background behind header content */}
+              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary via-pink-500 to-secondary opacity-30 pointer-events-none rounded-lg" />
+              <div className="flex items-center justify-center gap-3 mb-4 relative z-10">
                 {country.emoji && <span className="text-4xl">{country.emoji}</span>}
-                <h1 className="font-playfair text-4xl md:text-5xl font-bold">
+                <h1 className="font-playfair text-4xl md:text-5xl font-bold text-primary">
                   BYD en {country.name}
                 </h1>
               </div>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto relative z-10">
                 Todas las noticias y actualizaciones de BYD en {country.name}
               </p>
-              <div className="flex items-center justify-center gap-2 mt-4">
+              <div className="flex items-center justify-center gap-2 mt-4 relative z-10">
                 <MapPin className="h-5 w-5 text-primary" />
                 <Badge variant="outline" className="text-primary border-primary">
                   {posts.length} {posts.length === 1 ? "artículo" : "artículos"}

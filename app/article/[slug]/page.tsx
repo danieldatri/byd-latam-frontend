@@ -91,8 +91,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         <article>
           {/* Article Hero: text over low-opacity image */}
           <header className="relative mb-8 overflow-hidden rounded-xl border">
-
-            <div className="relative p-6 md:p-10 bg-gradient-to-br from-background via-gray-100 to-gray-200/80">
+            {/* Gradient background behind header content */}
+            <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary via-pink-500 to-secondary opacity-30 pointer-events-none" />
+            <div className="relative p-6 md:p-10 z-10">
               {/* Category badge above title, left aligned */}
               {post.categories && (
                 <div className="mb- flex items-center">
@@ -106,7 +107,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 </div>
               )}
 
-              <h1 className="font-playfair text-2xl md:text-4xl font-bold mb-6 text-gray-900">
+              <h1 className="font-playfair text-2xl md:text-4xl font-bold mb-6 text-primary">
                 {post.title}
               </h1>
 
