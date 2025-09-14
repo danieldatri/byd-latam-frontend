@@ -31,7 +31,8 @@ function getBodyPreview(body: any, maxLength: number = 120): string {
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }) : Promise<Metadata> {
-    const post = await getPostBySlug(params.slug);
+    const awaitedParams = await params;
+    const post = await getPostBySlug(awaitedParams.slug);
     if (!post) return {};
 
     const imageUrl = post.mainImage?.asset
@@ -40,7 +41,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
     return {
         title: post.title,
-        description: post.excerpt || "",
+        description: getBodyPreview(post.body) || post.excerpt || "Artículo de BYD Latam News",
+        keywords: post.tags ? post.tags.map((tag: any) => tag.title).join(", ") : undefined,
+        authors: post.author ? [{ name: post.author.name }] : undefined,
+        creator: post.author ? post.author.name : undefined,
+        publisher: "BYD Latam News",
         openGraph: {
             title: post.title,
             description: post.excerpt || "",
@@ -94,9 +99,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   <Badge
                     variant="secondary"
                     className="px-4 py-1 text-base font-semibold"
-                    style={{ backgroundColor: post.categories?.color }}
+                    style={{ backgroundColor: post.categories[0].color }}
                   >
-                    {post.categories?.title}
+                      {post.categories[0].title}
                   </Badge>
                 </div>
               )}
