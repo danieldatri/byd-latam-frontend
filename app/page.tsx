@@ -40,8 +40,10 @@ export default async function HomePage() {
           <div className="lg:col-span-3">
             {/* Featured Articles */}
             <section className="mb-12">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="font-playfair text-3xl font-bold flex items-center gap-2">
+              <div className="flex items-center justify-between mb-6 col-span-2 relative">
+                {/* Gradient background behind h2 */}
+                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary via-pink-500 to-secondary opacity-30 rounded-lg pointer-events-none" />
+                <h2 className="font-playfair text-3xl font-bold flex items-center gap-2 relative z-10 text-primary">
                   <TrendingUp className="h-8 w-8 text-primary" />
                   Destacados
                 </h2>
@@ -66,10 +68,13 @@ export default async function HomePage() {
 
             {/* Latest News */}
             <section>
-              <h2 className="font-playfair text-3xl font-bold mb-6 flex items-center gap-2">
-                <Newspaper className="h-8 w-8 text-primary" />
-                Últimas Noticias
-              </h2>
+              <div className="mb-6 relative">
+                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary via-pink-500 to-secondary opacity-30 rounded-lg pointer-events-none" />
+                <h2 className="font-playfair text-3xl font-bold flex items-center gap-2 relative z-10 text-primary">
+                  <Newspaper className="h-8 w-8 text-primary" />
+                  Últimas Noticias
+                </h2>
+              </div>
               {recentNonFeatured && recentNonFeatured.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {recentNonFeatured.map((article: Post) => (
@@ -113,5 +118,5 @@ export default async function HomePage() {
 
       <Footer />
     </div>
-  )
+  );
 }
