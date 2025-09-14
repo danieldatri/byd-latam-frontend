@@ -73,8 +73,13 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
   const displayExcerpt = article.excerpt || extractTextFromBody(article.body)
 
   return (
-  <Card className="group hover:shadow-lg transition-all duration-300">
-      <Link href={`/article/${article.slug.current}`}>
+    <Card className="group hover:shadow-lg transition-all duration-300 relative overflow-hidden">
+      {/* Overlay effect */}
+      <div className="pointer-events-none absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 animate-shine" style={{ background: "linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.2) 40%, transparent 90%)" }} />
+      </div>
+      <Link href={`/article/${article.slug.current}`} className="block">
         <div className="relative overflow-hidden rounded-t-lg">
           {article.mainImage ? (
             <Image
