@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { Calendar as CalendarIcon, SortAsc } from "lucide-react";
+import {Calendar as CalendarIcon, Grid, SortAsc} from "lucide-react";
 import { Category, Country, Post } from "@/lib/sanity";
 import type { DateRange } from "react-day-picker";
 
@@ -95,11 +95,16 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
   return (
     <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-8 bg-card p-4 rounded-lg border">
+      {/* Artículos encontrados count with Grid icon restored */}
+      <div className="flex items-center gap-2 mb-2 w-full">
+        <Grid className="h-5 w-5 text-muted-foreground" />
+        <span className="text-sm text-gray-600">{allPosts.length} artículos encontrados</span>
+      </div>
       {/* Category Filter (no label) */}
       <div className="flex flex-col">
         <select
           id="category-select"
-          className="px-3 py-2 border rounded-md text-sm min-w-[160px]"
+          className="filter-select px-3 py-2 border rounded-md text-sm min-w-[160px] text-gray-700 focus:outline-none focus:ring-0 focus:border-gray-300 hover:bg-gray-100"
           value={selectedCategory ?? ""}
           onChange={e => setSelectedCategory(e.target.value || null)}
         >
@@ -115,7 +120,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       <div className="flex flex-col">
         <select
           id="country-select"
-          className="px-3 py-2 border rounded-md text-sm min-w-[160px]"
+          className="filter-select px-3 py-2 border rounded-md text-sm min-w-[160px] text-gray-700 focus:outline-none focus:ring-0 focus:border-gray-300 hover:bg-gray-100"
           value={selectedCountry ?? ""}
           onChange={e => setSelectedCountry(e.target.value || null)}
         >
@@ -131,14 +136,17 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       <div className="flex flex-col">
         <Popover open={datePopoverOpen} onOpenChange={setDatePopoverOpen}>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="min-w-[160px] flex items-center gap-2">
+            <button
+              type="button"
+              className="filter-date-btn px-3 py-2 border rounded-md text-sm min-w-[160px] flex items-center gap-2 text-gray-700 focus:outline-none focus:ring-0 focus:border-gray-300 hover:bg-gray-100"
+            >
               <CalendarIcon className="w-4 h-4 text-muted-foreground" />
               {selectedShortcut
                 ? (selectedShortcut === "week" ? "Última semana" : selectedShortcut === "month" ? "Último mes" : "Último año")
-                : selectedDateRange.from && selectedDateRange.to
-                ? `${selectedDateRange.from.toLocaleDateString()} - ${selectedDateRange.to.toLocaleDateString()}`
-                : "Elegir fecha"}
-            </Button>
+                : (selectedDateRange.from && selectedDateRange.to)
+                  ? `${selectedDateRange.from.toLocaleDateString()} - ${selectedDateRange.to.toLocaleDateString()}`
+                  : "Elegir fecha"}
+            </button>
           </PopoverTrigger>
           <PopoverContent className="flex gap-6 w-fit">
             <div className="flex flex-col gap-2 min-w-[140px]">
@@ -204,7 +212,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           <SortAsc className="w-4 h-4 text-muted-foreground" />
           <select
             id="order-select"
-            className="px-3 py-2 border rounded-md text-sm min-w-[160px]"
+            className="filter-select px-3 py-2 border rounded-md text-sm min-w-[160px] text-gray-700 focus:outline-none focus:ring-0 focus:border-gray-300 hover:bg-gray-100"
             value={sortOrder}
             onChange={e => setSortOrder(e.target.value)}
           >

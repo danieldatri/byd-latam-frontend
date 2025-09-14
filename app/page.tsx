@@ -1,13 +1,13 @@
 import * as React from "react"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
-import { ArticleCard } from "@/components/article-card"
-import { AdBanner } from "@/components/ad-banner"
-import { HeroBanner } from "@/components/hero-banner"
-import { Button } from "@/components/ui/button"
-import { RegionsQuickAccess } from "@/components/countries-quick-access"
-import { ArrowRight, TrendingUp } from "lucide-react"
-import { getAllPosts, getFeaturedPosts, getAllCountries, Post } from "@/lib/sanity"
+import {Header} from "@/components/header"
+import {Footer} from "@/components/footer"
+import {ArticleCard} from "@/components/article-card"
+import {AdBanner} from "@/components/ad-banner"
+import {HeroBanner} from "@/components/hero-banner"
+import {Button} from "@/components/ui/button"
+import {RegionsQuickAccess} from "@/components/countries-quick-access"
+import {ArrowRight, Newspaper, TrendingUp} from "lucide-react"
+import {getAllCountries, getAllPosts, getFeaturedPosts, Post} from "@/lib/sanity"
 
 export default async function HomePage() {
   // Obtener datos reales de Sanity
@@ -66,7 +66,10 @@ export default async function HomePage() {
 
             {/* Latest News */}
             <section>
-              <h2 className="font-playfair text-3xl font-bold mb-6">Últimas Noticias</h2>
+              <h2 className="font-playfair text-3xl font-bold mb-6 flex items-center gap-2">
+                <Newspaper className="h-8 w-8 text-primary" />
+                Últimas Noticias
+              </h2>
               {recentNonFeatured && recentNonFeatured.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {recentNonFeatured.map((article: Post) => (

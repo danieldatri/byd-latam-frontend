@@ -1,11 +1,10 @@
 "use client";
-import React, {useState, useCallback} from "react";
+import React, {useCallback, useState} from "react";
 import {ArticleCard} from "@/components/article-card";
 import {Button} from "@/components/ui/button";
-import {Grid} from "lucide-react";
 import {Category, Country, Post} from "@/lib/sanity";
-import { NoArticles } from "@/components/no-articles";
-import { FilterBar } from "@/components/filter-bar";
+import {NoArticles} from "@/components/no-articles";
+import {FilterBar} from "@/components/filter-bar";
 
 interface NewsContentProps {
   allPosts: Post[];
@@ -28,15 +27,8 @@ export const NewsContent: React.FC<NewsContentProps> = ({ allPosts, categories, 
         countries={countries}
         allPosts={allPosts}
         onFilterChange={handleFilterChange}
+        foundCount={filteredPosts.length}
       />
-
-      {/* Results Header */}
-      <div className="flex items-center gap-2 mb-6">
-        <Grid className="h-5 w-5" />
-        <span className="text-sm text-gray-600">
-          {filteredPosts.length} artículos encontrados
-        </span>
-      </div>
 
       {/* Articles Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Calendar, MapPin } from "lucide-react"
+import { Calendar, MapPin, Star } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { urlFor } from "@/lib/sanity"
@@ -99,12 +99,13 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
                 {article.categories[0].title}
               </Badge>
             )}
-            {(featured || article.featured) && (
-              <Badge variant="secondary" className="bg-accent text-accent-foreground">
-                Destacado
-              </Badge>
-            )}
           </div>
+          {/* Featured Star at bottom right */}
+          {(featured || article.featured) && (
+            <div className="absolute bottom-4 right-4">
+              <Star className="w-5 drop-shadow-lg" fill="#facc15" stroke="#facc15" />
+            </div>
+          )}
         </div>
         <CardContent className="p-6">
           <h3

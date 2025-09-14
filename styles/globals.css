@@ -122,4 +122,29 @@
   body {
     @apply bg-background text-foreground;
   }
+  .filter-date-btn,
+  .filter-select {
+    background-color: #fff;
+    border-color: #d1d5db;
+    color: #374151;
+    transition: none;
+  }
+  .filter-date-btn:focus,
+  .filter-date-btn:active,
+  .filter-date-btn:hover,
+  .filter-select:focus,
+  .filter-select:active,
+  .filter-select:hover {
+    background-color: #f9fafb; /* Same as select hover */
+    border-color: #d1d5db; /* Same as select border */
+    box-shadow: none;
+    color: #374151; /* Same as select text */
+    cursor: pointer;
+  }
+  .filter-date-btn {
+    cursor: pointer;
+  }
+  .filter-select {
+    cursor: pointer;
+  }
 }
