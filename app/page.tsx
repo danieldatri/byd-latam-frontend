@@ -27,11 +27,11 @@ export default async function HomePage() {
       <Header />
 
       {/* Hero Banner Ad */}
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-2">
         <AdBanner size="banner" />
       </div>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-2">
         {/* Hero Section */}
         <HeroBanner />
 

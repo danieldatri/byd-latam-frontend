@@ -55,10 +55,9 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     let filteredPosts = allPosts;
     if (selectedCategory) {
       filteredPosts = filteredPosts.filter(post =>
-        // If post.category is an array, use .some, otherwise compare directly
-        Array.isArray(post.category)
-          ? post.category.some((cat: Category) => cat._id === selectedCategory)
-          : post.category && post.category._id === selectedCategory
+        Array.isArray(post.categories)
+          ? post.categories.some((cat: Category) => cat._id === selectedCategory)
+          : false
       );
     }
     if (selectedCountry) {
