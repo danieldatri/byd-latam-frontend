@@ -25,6 +25,19 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     notFound()
   }
 
+  // Utility to extract plain text from Portable Text blocks
+  function getBodyPreview(body: any, maxLength: number = 120): string {
+    if (!Array.isArray(body)) return "";
+    let text = "";
+    for (const block of body) {
+      if (block._type === "block" && Array.isArray(block.children)) {
+        text += block.children.map((child: any) => child.text).join("");
+        if (text.length >= maxLength) break;
+      }
+    }
+    return text.slice(0, maxLength).trim();
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -110,9 +123,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
           {/* Share Buttons Section */}
           <ShareButtons
-            url={`${BASE_URL}/article/${post.slug}`}
+            url={`${BASE_URL}/article/${post.slug.current}`}
             title={post.title}
-            description={post.excerpt || post.title}
+            description={getBodyPreview(post.body) || post.excerpt || post.title}
             image={post.mainImage ? urlFor(post.mainImage).width(1200).height(630).url() : `${BASE_URL}/placeholder.jpg`}
           />
 
