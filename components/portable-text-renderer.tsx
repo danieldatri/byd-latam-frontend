@@ -1,6 +1,7 @@
 import { PortableText } from '@portabletext/react'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
+import YoutubeEmbed from './youtube-embed'
 
 const components = {
   types: {
@@ -23,7 +24,19 @@ const components = {
   },
   block: {
     normal: ({ children }: any) => <p className="mb-4 text-gray-700 leading-relaxed">{children}</p>,
-    h1: ({ children }: any) => <h1 className="text-3xl font-bold mb-6 mt-8">{children}</h1>,
+    normal: ({ children }: any) => {
+      // If children is a single YoutubeEmbed, render as block
+      if (
+        Array.isArray(children) &&
+        children.length === 1 &&
+        typeof children[0] === 'object' &&
+        children[0]?.type?.name === 'YoutubeEmbed'
+      ) {
+        return children[0];
+      }
+      // Otherwise, render as paragraph
+      return <p className="mb-4 text-gray-700 leading-relaxed">{children}</p>;
+    },
     h2: ({ children }: any) => <h2 className="text-2xl font-bold mb-4 mt-6">{children}</h2>,
     h3: ({ children }: any) => <h3 className="text-xl font-bold mb-3 mt-5">{children}</h3>,
     h4: ({ children }: any) => <h4 className="text-lg font-semibold mb-2 mt-4">{children}</h4>,
@@ -40,16 +53,27 @@ const components = {
   marks: {
     strong: ({ children }: any) => <strong className="font-semibold">{children}</strong>,
     em: ({ children }: any) => <em className="italic">{children}</em>,
-    link: ({ value, children }: any) => (
-      <a
-        href={value.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-primary hover:underline"
-      >
-        {children}
-      </a>
-    ),
+    link: ({ value, children }: any) => {
+      const href = value.href;
+      const youtubeMatch = href.match(
+        /(?:https?:\/\/)?(?:www\.|m\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]{11})/
+      );
+      if (youtubeMatch) {
+        const videoId = youtubeMatch[1];
+        return <YoutubeEmbed videoId={videoId} caption={children} />;
+      }
+      // Default link rendering
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary hover:underline"
+        >
+          {children}
+        </a>
+      );
+    },
     internalLink: ({ value, children }: any) => {
       const slug = value?.reference?.slug?.current
       return slug ? (
