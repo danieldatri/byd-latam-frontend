@@ -53,8 +53,8 @@ export const articlesQuery = `
     },
     tags[]->{
       _id,
-      title,
-      color
+      name,
+      slug
     }
   }
 `
@@ -122,6 +122,7 @@ export const articleBySlugQuery = `
       name,
       emoji
     },
+    featured,
     mainImage {
       asset->{
         _id,
@@ -141,13 +142,12 @@ export const articleBySlugQuery = `
         asset->{
           url
         }
-      },
-      bio
+      }
     },
     tags[]->{
       _id,
-      title,
-      color
+      name,
+      slug
     }
   }
 `

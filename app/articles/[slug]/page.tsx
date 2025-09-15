@@ -106,11 +106,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 <div className="flex flex-wrap gap-2 mb-4">
                   {post.tags.map((tag: any) => (
                     <Badge
-                      key={tag.title}
+                      key={tag._id}
                       variant="outline"
-                      style={{ borderColor: tag.color, color: tag.color }}
                     >
-                      {tag.title}
+                      {tag.name}
                     </Badge>
                   ))}
                 </div>
@@ -184,4 +183,3 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     </div>
   )
 }
-
