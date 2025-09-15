@@ -8,6 +8,7 @@ import {Button} from "@/components/ui/button"
 import {RegionsQuickAccess} from "@/components/countries-quick-access"
 import {ArrowRight, Newspaper, TrendingUp} from "lucide-react"
 import {getAllCountries, getAllPosts, getFeaturedPosts, Post} from "@/lib/sanity"
+import { SectionHeader } from "@/components/section-header"
 
 export default async function HomePage() {
   // Obtener datos reales de Sanity
@@ -40,19 +41,10 @@ export default async function HomePage() {
           <div className="lg:col-span-3">
             {/* Featured Articles */}
             <section className="mb-12">
-              <div className="flex items-center justify-between mb-6 col-span-2 relative">
-                {/* Gradient background behind h2 */}
-                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary via-pink-500 to-secondary opacity-30 rounded-lg pointer-events-none" />
-                <h2 className="font-playfair text-3xl font-bold flex items-center gap-2 relative z-10 text-primary">
-                  <TrendingUp className="h-8 w-8 text-primary" />
-                  Destacados
-                </h2>
-                <Button variant="outline" asChild>
-                  <a href="/articles">
-                    Ver todas <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-              </div>
+              <SectionHeader
+                name="Destacados"
+                icon={TrendingUp}
+              />
               {featuredArticles && featuredArticles.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {featuredArticles.map((article: Post) => (
@@ -68,13 +60,12 @@ export default async function HomePage() {
 
             {/* Latest News */}
             <section>
-              <div className="mb-6 relative">
-                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary via-pink-500 to-secondary opacity-30 rounded-lg pointer-events-none" />
-                <h2 className="font-playfair text-3xl font-bold flex items-center gap-2 relative z-10 text-primary">
-                  <Newspaper className="h-8 w-8 text-primary" />
-                  Últimas Noticias
-                </h2>
-              </div>
+              <SectionHeader
+                name="Últimas Noticias"
+                icon={Newspaper}
+                link="/articles"
+                linkLabel="Ver todas"
+              />
               {recentNonFeatured && recentNonFeatured.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {recentNonFeatured.map((article: Post) => (
