@@ -1,185 +1,219 @@
-import { notFound } from "next/navigation"
+import {notFound} from "next/navigation"
 import Image from "next/image"
-import { Calendar, MapPin, User } from "lucide-react"
-import { BackLink } from "@/components/back-link"
-import { getPostBySlug, urlFor } from "@/lib/sanity"
-import { PortableTextRenderer } from "@/components/portable-text-renderer"
-import { Badge } from "@/components/ui/badge"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
-import { ShareButtons } from "@/components/share-buttons"
-import { Metadata } from "next";
+import {Calendar, MapPin, User} from "lucide-react"
+import {BackLink} from "@/components/back-link"
+import {getAllPosts, getPostBySlug, urlFor} from "@/lib/sanity"
+import {PortableTextRenderer} from "@/components/portable-text-renderer"
+import {Badge} from "@/components/ui/badge"
+import {Header} from "@/components/header"
+import {Footer} from "@/components/footer"
+import {ShareButtons} from "@/components/share-buttons"
+import {Metadata} from "next";
+import {RelatedArticlesCarousel} from "@/components/related-articles-carousel"
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
 
 interface ArticlePageProps {
-  params: any
+    params: any
 }
 
 function getBodyPreview(body: any, maxLength: number = 120): string {
-  if (!Array.isArray(body)) return "";
-  let text = "";
-  for (const block of body) {
-    if (block._type === "block" && Array.isArray(block.children)) {
-      text += block.children.map((child: any) => child.text).join("");
-      if (text.length >= maxLength) break;
+    if (!Array.isArray(body)) return "";
+    let text = "";
+    for (const block of body) {
+        if (block._type === "block" && Array.isArray(block.children)) {
+            text += block.children.map((child: any) => child.text).join("");
+            if (text.length >= maxLength) break;
+        }
     }
-  }
-  return text.slice(0, maxLength).trim();
+    return text.slice(0, maxLength).trim();
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) : Promise<Metadata> {
-  const awaitedParams = await params;
-  const post = await getPostBySlug(awaitedParams.slug);
-  if (!post) return {};
+export async function generateMetadata({params}: { params: { slug: string } }): Promise<Metadata> {
+    const awaitedParams = await params;
+    const post = await getPostBySlug(awaitedParams.slug);
+    if (!post) return {};
 
-  const imageUrl = post.mainImage?.asset
-    ? urlFor(post.mainImage).width(1200).height(630).url()
-    : `${BASE_URL}/placeholder.jpg`;
+    const imageUrl = post.mainImage?.asset
+        ? urlFor(post.mainImage).width(1200).height(630).url()
+        : `${BASE_URL}/placeholder.jpg`;
 
-  return {
-    title: post.title,
-    description: getBodyPreview(post.body) || post.excerpt || "Artículo de BYD Latam News",
-    keywords: post.tags ? post.tags.map((tag: any) => tag.title).join(", ") : undefined,
-    authors: post.author ? [{ name: post.author.name }] : undefined,
-    creator: post.author ? post.author.name : undefined,
-    publisher: "BYD Latam News",
-    openGraph: {
-      title: post.title,
-      description: post.excerpt || "",
-      url: `${BASE_URL}/articles/${post.slug.current}`,
-      siteName: "BYD Latam News",
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: post.mainImage?.alt || post.title,
+    return {
+        title: post.title,
+        description: getBodyPreview(post.body) || post.excerpt || "Artículo de BYD Latam News",
+        keywords: post.tags ? post.tags.map((tag: any) => tag.title).join(", ") : undefined,
+        authors: post.author ? [{name: post.author.name}] : undefined,
+        creator: post.author ? post.author.name : undefined,
+        publisher: "BYD Latam News",
+        openGraph: {
+            title: post.title,
+            description: post.excerpt || "",
+            url: `${BASE_URL}/articles/${post.slug.current}`,
+            siteName: "BYD Latam News",
+            images: [
+                {
+                    url: imageUrl,
+                    width: 1200,
+                    height: 630,
+                    alt: post.mainImage?.alt || post.title,
+                },
+            ],
+            locale: "es_ES",
+            type: "article",
         },
-      ],
-      locale: "es_ES",
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.excerpt || "",
-      images: [imageUrl],
-    },
-  };
+        twitter: {
+            card: "summary_large_image",
+            title: post.title,
+            description: post.excerpt || "",
+            images: [imageUrl],
+        },
+    };
 }
 
-export default async function ArticlePage({ params }: ArticlePageProps) {
-  const { slug } = (await params) as { slug: string }
-  const post = await getPostBySlug(slug)
+export default async function ArticlePage({params}: ArticlePageProps) {
+    const {slug} = (await params) as { slug: string }
+    const post = await getPostBySlug(slug)
 
-  if (!post) {
-    notFound()
-  }
+    if (!post) {
+        notFound()
+    }
 
-  return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
-        <BackLink />
-        <article>
-          <header className="relative mb-8 overflow-hidden rounded-xl border">
-            <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary via-pink-500 to-secondary opacity-30 pointer-events-none" />
-            <div className="relative p-6 md:p-10 z-10">
-              {post.categories && (
-                <div className="mb- flex items-center">
-                  <Badge
-                    variant="secondary"
-                    className="px-4 py-1 text-base font-semibold"
-                    style={{ backgroundColor: post.categories[0].color }}
-                  >
-                    {post.categories[0].title}
-                  </Badge>
-                </div>
-              )}
+    // Fetch all articles for recommendations
+    const allArticles = await getAllPosts()
+    // Exclude current article
+    const otherArticles = allArticles.filter((a: any) => a.slug.current !== slug)
 
-              <h1 className="font-playfair text-2xl md:text-4xl font-bold mb-6 text-primary">
-                {post.title}
-              </h1>
+    // Get tag IDs of current article
+    const currentTagIds = post.tags?.map((t: any) => t._id) || []
+    // Get category IDs of current article
+    const currentCategoryIds = post.categories?.map((c: any) => c._id) || []
 
-              {post.tags?.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {post.tags.map((tag: any) => (
-                    <Badge
-                      key={tag._id}
-                      variant="outline"
-                    >
-                      {tag.name}
-                    </Badge>
-                  ))}
-                </div>
-              )}
+    // Find articles with at least 2 tags in common
+    let recommended = otherArticles.filter((a: any) => {
+        if (!a.tags) return false
+        const tagIds = a.tags.map((t: any) => t._id)
+        const commonTags = tagIds.filter((id: string) => currentTagIds.includes(id))
+        return commonTags.length >= 2
+    })
 
-              <div className="flex flex-wrap items-center gap-6 text-gray-900">
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  <span>{new Date(post.publishedAt).toLocaleDateString("es-ES", {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4" />
-                  <span className="flex items-center gap-1">
+    // If none, fallback to same category
+    if (recommended.length === 0) {
+        recommended = otherArticles.filter((a: any) => {
+            if (!a.categories) return false
+            const catIds = a.categories.map((c: any) => c._id)
+            return catIds.some((id: string) => currentCategoryIds.includes(id))
+        })
+    }
+
+    // Limit to 6 recommendations
+    recommended = recommended.slice(0, 6)
+
+    return (
+        <div className="min-h-screen bg-background">
+            <Header/>
+            <main className="container mx-auto px-4 py-8 max-w-4xl">
+                <BackLink/>
+                <article>
+                    <header className="relative mb-8 overflow-hidden rounded-xl border">
+                        <div
+                            className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary via-pink-500 to-secondary opacity-30 pointer-events-none"/>
+                        <div className="relative p-6 md:p-10 z-10">
+                            {post.categories && (
+                                <div className="mb- flex items-center">
+                                    <Badge
+                                        variant="secondary"
+                                        className="px-4 py-1 text-base font-semibold"
+                                        style={{backgroundColor: post.categories[0].color}}
+                                    >
+                                        {post.categories[0].title}
+                                    </Badge>
+                                </div>
+                            )}
+
+                            <h1 className="font-playfair text-2xl md:text-4xl font-bold mb-6 text-primary">
+                                {post.title}
+                            </h1>
+
+                            {post.tags?.length > 0 && (
+                                <div className="flex flex-wrap gap-2 mb-4">
+                                    {post.tags.map((tag: any) => (
+                                        <Badge
+                                            key={tag._id}
+                                            variant="outline"
+                                        >
+                                            {tag.name}
+                                        </Badge>
+                                    ))}
+                                </div>
+                            )}
+
+                            <div className="flex flex-wrap items-center gap-6 text-gray-900">
+                                <div className="flex items-center gap-2">
+                                    <Calendar className="h-4 w-4"/>
+                                    <span>{new Date(post.publishedAt).toLocaleDateString("es-ES", {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric'
+                                    })}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <MapPin className="h-4 w-4"/>
+                                    <span className="flex items-center gap-1">
                     {post.country?.emoji && <span>{post.country.emoji}</span>}
-                    {post.country?.name || 'Sin país'}
+                                        {post.country?.name || 'Sin país'}
                   </span>
-                </div>
-                {post.author && (
-                  <div className="flex items-center gap-2">
-                    <User className="h-4 w-4" />
-                    <span>Por {post.author.name}</span>
-                  </div>
-                )}
-              </div>
-            </div>
-          </header>
+                                </div>
+                                {post.author && (
+                                    <div className="flex items-center gap-2">
+                                        <User className="h-4 w-4"/>
+                                        <span>Por {post.author.name}</span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </header>
 
-          {post.excerpt && (
-            <p className="text-xl text-gray-600 leading-relaxed mb-8 text-justify">
-              {post.excerpt}
-            </p>
-          )}
+                    {post.excerpt && (
+                        <p className="text-xl text-gray-600 leading-relaxed mb-8 text-justify">
+                            {post.excerpt}
+                        </p>
+                    )}
 
-          <div className="prose prose-lg max-w-none">
-            {post.body && <PortableTextRenderer content={post.body} />}
-          </div>
+                    <div className="prose prose-lg max-w-none">
+                        {post.body && <PortableTextRenderer content={post.body}/>}
+                    </div>
 
-          <ShareButtons
-            url={`${BASE_URL}/articles/${post.slug.current}`}
-            title={post.title}
-            description={getBodyPreview(post.body) || post.excerpt || post.title}
-            image={post.mainImage ? urlFor(post.mainImage).width(1200).height(630).url() : `${BASE_URL}/placeholder.jpg`}
-          />
+                    <ShareButtons
+                        url={`${BASE_URL}/articles/${post.slug.current}`}
+                        title={post.title}
+                        description={getBodyPreview(post.body) || post.excerpt || post.title}
+                        image={post.mainImage ? urlFor(post.mainImage).width(1200).height(630).url() : `${BASE_URL}/placeholder.jpg`}
+                    />
 
-          {post.author && post.author.bio && (
-            <div className="mt-12 p-6 bg-gray-50 rounded-lg">
-              <div className="flex items-start gap-4">
-                {post.author.image && (
-                  <Image
-                    src={urlFor(post.author.image).width(80).height(80).url()}
-                    alt={post.author.name}
-                    width={80}
-                    height={80}
-                    className="rounded-full"
-                  />
-                )}
-                <div>
-                  <h3 className="font-semibold text-lg mb-2">Sobre {post.author.name}</h3>
-                  <PortableTextRenderer content={post.author.bio} />
-                </div>
-              </div>
-            </div>
-          )}
-        </article>
-      </main>
-      <Footer />
-    </div>
-  )
+                    {post.author && post.author.bio && (
+                        <div className="mt-12 p-6 bg-gray-50 rounded-lg">
+                            <div className="flex items-start gap-4">
+                                {post.author.image && (
+                                    <Image
+                                        src={urlFor(post.author.image).width(80).height(80).url()}
+                                        alt={post.author.name}
+                                        width={80}
+                                        height={80}
+                                        className="rounded-full"
+                                    />
+                                )}
+                                <div>
+                                    <h3 className="font-semibold text-lg mb-2">Sobre {post.author.name}</h3>
+                                    <PortableTextRenderer content={post.author.bio}/>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </article>
+                {/* You might be interested section */}
+                <RelatedArticlesCarousel posts={recommended}/>
+            </main>
+            <Footer/>
+        </div>
+    )
 }
