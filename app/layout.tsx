@@ -6,6 +6,7 @@ import { Playfair_Display } from "next/font/google"
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Suspense } from "react"
 import "./globals.css"
+import GoogleAnalytics from "@/components/google-analytics";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -47,6 +48,7 @@ export default function RootLayout({
         <Suspense fallback={null}>{children}</Suspense>
         {/* <Analytics /> */}
         <SpeedInsights />
+        <GoogleAnalytics />
       </body>
     </html>
   )
