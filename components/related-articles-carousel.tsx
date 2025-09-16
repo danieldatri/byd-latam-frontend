@@ -1,8 +1,8 @@
 "use client";
 import * as React from "react";
-import { ArrowLeft, ArrowRight, TrendingUp } from "lucide-react";
-import { SectionHeader } from "@/components/section-header";
-import { ArticleCard } from "@/components/article-card";
+import {ArrowLeft, ArrowRight, FileSearch2} from "lucide-react";
+import {SectionHeader} from "@/components/section-header";
+import {ArticleCard} from "@/components/article-card";
 
 interface RelatedArticlesCarouselProps {
   posts: any[];
@@ -15,7 +15,7 @@ export const RelatedArticlesCarousel: React.FC<RelatedArticlesCarouselProps> = (
   if (!posts || posts.length === 0) {
     return (
       <div className="mt-12">
-        <SectionHeader name="Podría Interesarte" icon={TrendingUp} />
+        <SectionHeader name="Podría Interesarte" icon={FileSearch2} />
         <div className="text-center py-8 text-muted-foreground">
           No hay artículos relacionados disponibles
         </div>
@@ -25,7 +25,7 @@ export const RelatedArticlesCarousel: React.FC<RelatedArticlesCarouselProps> = (
 
   return (
     <div className="mt-12">
-      <SectionHeader name="Podría Interesarte" icon={TrendingUp} />
+      <SectionHeader name="Podría Interesarte" icon={FileSearch2} />
       <div className="relative flex items-center">
         {/* Left arrow */}
         {posts.length > 2 && (

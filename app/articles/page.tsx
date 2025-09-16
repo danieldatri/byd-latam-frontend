@@ -2,6 +2,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ArticlesContent } from "./articles-content"
 import { getAllPosts, getAllCategories, getAllCountries } from "@/lib/sanity"
+import * as React from "react";
 
 export default async function ArticlesPage() {
   const [allPosts, categories, countries] = await Promise.all([
@@ -17,8 +18,8 @@ export default async function ArticlesPage() {
         {/* Page Header */}
         <div className="text-center mb-12 relative">
           {/* Gradient background behind header content */}
-          <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary via-pink-500 to-secondary opacity-30 pointer-events-none rounded-lg" />
-          <h1 className="font-playfair text-4xl md:text-5xl font-bold mb-4 relative z-10 text-primary">
+            <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary via-red-400 to-gray-50 opacity-30 rounded-lg pointer-events-none" />
+          <h1 className="font-playfair text-2xl md:text-4xl font-bold mb-6 text-gray-900">
             Todos los Artículos
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto relative z-10">

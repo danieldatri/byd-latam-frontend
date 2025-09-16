@@ -54,14 +54,14 @@ export default async function RegionPage({ params }: RegionPageProps) {
             {/* Region Header */}
             <div className="text-center mb-12 relative">
               {/* Gradient background behind header content */}
-              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary via-pink-500 to-secondary opacity-30 pointer-events-none rounded-lg" />
+                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary via-red-400 to-gray-50 opacity-30 rounded-lg pointer-events-none" />
               <div className="flex items-center justify-center gap-3 mb-4 relative z-10">
                 {country.emoji && <span className="text-4xl">{country.emoji}</span>}
-                <h1 className="font-playfair text-4xl md:text-5xl font-bold text-primary">
+                <h1 className="font-playfair text-4xl md:text-5xl font-bold text-gray-900">
                   BYD en {country.name}
                 </h1>
               </div>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto relative z-10">
+              <p className="text-xl text-gray-700 max-w-2xl mx-auto relative z-10">
                 Todas las noticias y actualizaciones de BYD en {country.name}
               </p>
               <div className="flex items-center justify-center gap-2 mt-4 relative z-10">

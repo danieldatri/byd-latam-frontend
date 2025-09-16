@@ -73,7 +73,7 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
   const displayExcerpt = article.excerpt || extractTextFromBody(article.body)
 
   return (
-    <Card className="group hover:shadow-lg transition-all duration-300 relative overflow-hidden">
+    <Card className="group hover:shadow-lg transition-all duration-300 relative overflow-hidden shadow-xl">
       {/* Overlay effect */}
       <div className="pointer-events-none absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <div className="absolute inset-0 bg-black/40" />
@@ -98,7 +98,7 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
             {Array.isArray(article.categories) && article.categories.length > 0 && (
               <Badge
                 variant="secondary"
-                className="text-white"
+                className="text-white shadow-lg"
                 style={{ backgroundColor: article.categories[0].color }}
               >
                 {article.categories[0].title}

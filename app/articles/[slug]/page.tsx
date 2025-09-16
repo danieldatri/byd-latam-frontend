@@ -10,6 +10,7 @@ import {Footer} from "@/components/footer"
 import {ShareButtons} from "@/components/share-buttons"
 import {Metadata} from "next";
 import {RelatedArticlesCarousel} from "@/components/related-articles-carousel"
+import * as React from "react";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
 
@@ -114,15 +115,14 @@ export default async function ArticlePage({params}: ArticlePageProps) {
             <main className="container mx-auto px-4 py-8 max-w-4xl">
                 <BackLink/>
                 <article>
-                    <header className="relative mb-8 overflow-hidden rounded-xl border">
-                        <div
-                            className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary via-pink-500 to-secondary opacity-30 pointer-events-none"/>
+                    <header className="relative mb-8 overflow-hidden rounded-xl">
+                        <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary via-red-400 to-gray-50 opacity-30 rounded-lg pointer-events-none" />
                         <div className="relative p-6 md:p-10 z-10">
                             {post.categories && (
                                 <div className="mb- flex items-center">
                                     <Badge
                                         variant="secondary"
-                                        className="px-4 py-1 text-base font-semibold"
+                                        className="px-4 py-1 text-base font-semibold shadow-lg"
                                         style={{backgroundColor: post.categories[0].color}}
                                     >
                                         {post.categories[0].title}
@@ -130,17 +130,14 @@ export default async function ArticlePage({params}: ArticlePageProps) {
                                 </div>
                             )}
 
-                            <h1 className="font-playfair text-2xl md:text-4xl font-bold mb-6 text-primary">
+                            <h1 className="font-playfair text-2xl md:text-4xl font-bold mb-6 text-gray-700">
                                 {post.title}
                             </h1>
 
                             {post.tags?.length > 0 && (
                                 <div className="flex flex-wrap gap-2 mb-4">
                                     {post.tags.map((tag: any) => (
-                                        <Badge
-                                            key={tag._id}
-                                            variant="outline"
-                                        >
+                                        <Badge key={tag._id} variant="outline">
                                             {tag.name}
                                         </Badge>
                                     ))}
