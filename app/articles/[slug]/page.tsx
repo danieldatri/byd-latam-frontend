@@ -137,7 +137,11 @@ export default async function ArticlePage({params}: ArticlePageProps) {
                             {post.tags?.length > 0 && (
                                 <div className="flex flex-wrap gap-2 mb-4">
                                     {post.tags.map((tag: any) => (
-                                        <Badge key={tag._id} variant="outline">
+                                        <Badge
+                                            key={tag._id}
+                                            className="px-3 py-1 text-sm font-medium text-white shadow-sm border border-white/10 bg-gradient-to-r
+                                            from-gray-500/60 to-gray-700/40 hover:from-black hover:to-black transition-colors"
+                                        >
                                             {tag.name}
                                         </Badge>
                                     ))}
