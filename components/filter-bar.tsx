@@ -5,6 +5,7 @@ import { Calendar } from "@/components/ui/calendar";
 import {Calendar as CalendarIcon, Grid, SortAsc} from "lucide-react";
 import { Category, Country, Post } from "@/lib/sanity";
 import type { DateRange } from "react-day-picker";
+import { useIsMobile } from "../hooks/use-mobile";
 
 export interface FilterBarProps {
   categories: Category[];
@@ -33,6 +34,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   const [datePopoverOpen, setDatePopoverOpen] = useState(false);
   const [selectedDateRange, setSelectedDateRange] = useState<DateRange>({ from: undefined, to: undefined });
   const [selectedShortcut, setSelectedShortcut] = useState<string | null>(null);
+  const isMobile = useIsMobile();
 
   // Helper to get date range for shortcuts
   const getShortcutRange = (shortcut: string): { from: Date; to: Date } => {
@@ -149,61 +151,100 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                   : "Elegir fecha"}
             </button>
           </PopoverTrigger>
-          <PopoverContent className="flex gap-6 w-fit">
-            <div className="flex flex-col gap-2 min-w-[140px]">
-              <span className="font-semibold mb-2">Atajos</span>
-              <Button
-                variant={selectedShortcut === "week" ? "default" : "ghost"}
-                onClick={() => {
-                  setSelectedShortcut("week");
-                  setSelectedDateRange({ from: undefined, to: undefined });
-                  setDatePopoverOpen(false);
-                }}
-              >
-                Última semana
-              </Button>
-              <Button
-                variant={selectedShortcut === "month" ? "default" : "ghost"}
-                onClick={() => {
-                  setSelectedShortcut("month");
-                  setSelectedDateRange({ from: undefined, to: undefined });
-                  setDatePopoverOpen(false);
-                }}
-              >
-                Último mes
-              </Button>
-              <Button
-                variant={selectedShortcut === "year" ? "default" : "ghost"}
-                onClick={() => {
-                  setSelectedShortcut("year");
-                  setSelectedDateRange({ from: undefined, to: undefined });
-                  setDatePopoverOpen(false);
-                }}
-              >
-                Último año
-              </Button>
-              <Button
-                variant="ghost"
-                onClick={() => {
-                  setSelectedShortcut(null);
-                  setSelectedDateRange({ from: undefined, to: undefined });
-                }}
-                className="mt-2"
-              >
-                Limpiar filtro
-              </Button>
-            </div>
-            <div className="border-l pl-6">
-              <Calendar
-                mode="range"
-                selected={selectedDateRange}
-                onSelect={range => {
-                  setSelectedDateRange(range ?? { from: undefined, to: undefined });
-                  setSelectedShortcut(null);
-                }}
-                numberOfMonths={2}
-              />
-            </div>
+          <PopoverContent className={isMobile ? "flex flex-col gap-4 w-full min-w-[220px] p-2" : "flex gap-6 w-fit"}>
+            {isMobile ? (
+              <>
+                <select
+                  className="px-3 py-2 border rounded-md text-sm w-full text-gray-700 focus:outline-none focus:ring-0 focus:border-gray-300 mb-2"
+                  value={selectedShortcut ?? ""}
+                  onChange={e => {
+                    const value = e.target.value;
+                    if (value === "") {
+                      setSelectedShortcut(null);
+                      setSelectedDateRange({ from: undefined, to: undefined });
+                    } else {
+                      setSelectedShortcut(value);
+                      setSelectedDateRange({ from: undefined, to: undefined });
+                      setDatePopoverOpen(false);
+                    }
+                  }}
+                >
+                  <option value="">Elegir atajo</option>
+                  <option value="week">Última semana</option>
+                  <option value="month">Último mes</option>
+                  <option value="year">Último año</option>
+                  <option value="clear">Limpiar filtro</option>
+                </select>
+                <div className="w-full">
+                  <Calendar
+                    mode="range"
+                    selected={selectedDateRange}
+                    onSelect={range => {
+                      setSelectedDateRange(range ?? { from: undefined, to: undefined });
+                      setSelectedShortcut(null);
+                    }}
+                    numberOfMonths={1}
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="flex flex-col gap-2 min-w-[140px]">
+                  <span className="font-semibold mb-2">Atajos</span>
+                  <Button
+                    variant={selectedShortcut === "week" ? "default" : "ghost"}
+                    onClick={() => {
+                      setSelectedShortcut("week");
+                      setSelectedDateRange({ from: undefined, to: undefined });
+                      setDatePopoverOpen(false);
+                    }}
+                  >
+                    Última semana
+                  </Button>
+                  <Button
+                    variant={selectedShortcut === "month" ? "default" : "ghost"}
+                    onClick={() => {
+                      setSelectedShortcut("month");
+                      setSelectedDateRange({ from: undefined, to: undefined });
+                      setDatePopoverOpen(false);
+                    }}
+                  >
+                    Último mes
+                  </Button>
+                  <Button
+                    variant={selectedShortcut === "year" ? "default" : "ghost"}
+                    onClick={() => {
+                      setSelectedShortcut("year");
+                      setSelectedDateRange({ from: undefined, to: undefined });
+                      setDatePopoverOpen(false);
+                    }}
+                  >
+                    Último año
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      setSelectedShortcut(null);
+                      setSelectedDateRange({ from: undefined, to: undefined });
+                    }}
+                    className="mt-2"
+                  >
+                    Limpiar filtro
+                  </Button>
+                </div>
+                <div className="border-l pl-6">
+                  <Calendar
+                    mode="range"
+                    selected={selectedDateRange}
+                    onSelect={range => {
+                      setSelectedDateRange(range ?? { from: undefined, to: undefined });
+                      setSelectedShortcut(null);
+                    }}
+                    numberOfMonths={2}
+                  />
+                </div>
+              </>
+            )}
           </PopoverContent>
         </Popover>
       </div>
