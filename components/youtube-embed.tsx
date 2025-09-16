@@ -12,7 +12,6 @@ const YoutubeEmbed: React.FC<YoutubeEmbedProps> = ({ videoId, caption }) => (
       height="315"
       src={`https://www.youtube.com/embed/${videoId}`}
       title="YouTube video player"
-      frameBorder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen
       className="rounded-lg w-full max-w-2xl h-72"

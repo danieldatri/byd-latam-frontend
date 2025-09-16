@@ -21,9 +21,11 @@ const components = {
         )}
       </div>
     ),
+    youtube: ({ value }: any) => (
+      <YoutubeEmbed videoId={value.videoId} caption={value.caption} />
+    ),
   },
   block: {
-    normal: ({ children }: any) => <p className="mb-4 text-gray-700 leading-relaxed">{children}</p>,
     normal: ({ children }: any) => {
       // If children is a single YoutubeEmbed, render as block
       if (
@@ -55,14 +57,7 @@ const components = {
     em: ({ children }: any) => <em className="italic">{children}</em>,
     link: ({ value, children }: any) => {
       const href = value.href;
-      const youtubeMatch = href.match(
-        /(?:https?:\/\/)?(?:www\.|m\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]{11})/
-      );
-      if (youtubeMatch) {
-        const videoId = youtubeMatch[1];
-        return <YoutubeEmbed videoId={videoId} caption={children} />;
-      }
-      // Default link rendering
+      // Only render as a regular link now
       return (
         <a
           href={href}
