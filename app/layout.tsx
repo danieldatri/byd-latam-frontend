@@ -6,7 +6,7 @@ import { Playfair_Display } from "next/font/google"
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Suspense } from "react"
 import "./globals.css"
-import GoogleAnalytics from "@/components/google-analytics";
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,6 +37,8 @@ export const metadata: Metadata = {
   },
 }
 
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -44,11 +46,28 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
+      <head>
+        {GA_ID && (
+          <>
+            <Script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+            />
+            <Script id="google-analytics">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}');
+              `}
+            </Script>
+          </>
+        )}
+      </head>
       <body className={`font-sans ${inter.variable} ${jetbrainsMono.variable} ${playfair.variable} antialiased`}>
         <Suspense fallback={null}>{children}</Suspense>
         {/* <Analytics /> */}
         <SpeedInsights />
-        <GoogleAnalytics />
       </body>
     </html>
   )
