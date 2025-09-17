@@ -1,4 +1,3 @@
-import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ArticlesContent } from "./articles-content"
 import { getAllPosts, getAllCategories, getAllCountries } from "@/lib/sanity"
@@ -13,7 +12,6 @@ export default async function ArticlesPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
       <main className="container mx-auto px-4 py-8">
         {/* Page Header */}
         <div className="text-center mb-12 relative">
@@ -34,4 +32,3 @@ export default async function ArticlesPage() {
     </div>
   )
 }
-

@@ -1,14 +1,13 @@
 import * as React from "react"
-import {Header} from "@/components/header"
 import {Footer} from "@/components/footer"
 import {ArticleCard} from "@/components/article-card"
 import {AdBanner} from "@/components/ad-banner"
 import {HeroBanner} from "@/components/hero-banner"
 import {Button} from "@/components/ui/button"
 import {RegionsQuickAccess} from "@/components/countries-quick-access"
-import {ArrowRight, Newspaper, TrendingUp} from "lucide-react"
+import {Newspaper, TrendingUp} from "lucide-react"
 import {getAllCountries, getAllPosts, getFeaturedPosts, Post} from "@/lib/sanity"
-import { SectionHeader } from "@/components/section-header"
+import {SectionHeader} from "@/components/section-header"
 
 export default async function HomePage() {
   // Obtener datos reales de Sanity
@@ -25,8 +24,7 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-
+      {/* <Header /> removed, now handled globally in layout.tsx */}
       {/* Hero Banner Ad */}
       <div className="container mx-auto px-4 py-2">
         <AdBanner size="banner" />

@@ -7,6 +7,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Suspense } from "react"
 import "./globals.css"
 import Script from "next/script";
+import HeaderBlock from "@/components/header-block";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -65,7 +66,11 @@ export default function RootLayout({
         )}
       </head>
       <body className={`font-sans ${inter.variable} ${jetbrainsMono.variable} ${playfair.variable} antialiased`}>
-        <Suspense fallback={null}>{children}</Suspense>
+        <HeaderBlock />
+        <div style={{ height: '104px' }} />
+        <div>
+          <Suspense fallback={null}>{children}</Suspense>
+        </div>
         {/* <Analytics /> */}
         <SpeedInsights />
       </body>

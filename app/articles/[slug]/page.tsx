@@ -5,7 +5,6 @@ import {BackLink} from "@/components/back-link"
 import {getAllPosts, getPostBySlug, urlFor} from "@/lib/sanity"
 import {PortableTextRenderer} from "@/components/portable-text-renderer"
 import {Badge} from "@/components/ui/badge"
-import {Header} from "@/components/header"
 import {Footer} from "@/components/footer"
 import {ShareButtons} from "@/components/share-buttons"
 import {Metadata} from "next";
@@ -111,7 +110,6 @@ export default async function ArticlePage({params}: ArticlePageProps) {
 
     return (
         <div className="min-h-screen bg-background">
-            <Header/>
             <main className="container mx-auto px-4 py-8 max-w-4xl">
                 <BackLink/>
                 <article>

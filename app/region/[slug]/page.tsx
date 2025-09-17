@@ -1,6 +1,5 @@
 import * as React from "react";
 import { notFound } from "next/navigation";
-import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ArticleCard } from "@/components/article-card";
 import { Badge } from "@/components/ui/badge";
@@ -47,7 +46,6 @@ export default async function RegionPage({ params }: RegionPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-3">
