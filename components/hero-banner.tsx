@@ -27,7 +27,7 @@ export function HeroBanner() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Banner%20x-01.png-WKWgiQjmIuzuRToFhSLpWYyex3ik1N.jpeg"
+            src="/banner-byd-latam-news.png"
           alt="BYD Latam News - Vehículos BYD"
           fill
           className="object-cover"
