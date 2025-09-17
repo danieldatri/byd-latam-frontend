@@ -3,13 +3,32 @@
 import Link from "next/link"
 import Image from "next/image"
 import {Menu, X} from "lucide-react"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import {Button} from "@/components/ui/button"
 import {NavMenu} from "./nav-menu"
 import {menuItems} from "@/data/menus"
+import {Globe} from "lucide-react"
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [countries, setCountries] = useState([])
+
+  useEffect(() => {
+    async function fetchCountries() {
+      const res = await fetch("/api/countries")
+      if (!res.ok) return setCountries([])
+      const result = await res.json()
+      setCountries(result)
+    }
+    fetchCountries()
+  }, [])
+
+  const handleCountrySelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value
+    if (!value) return
+    window.location.href = `/region/${value}`
+  }
+
   return (
     <div className="header-component w-full border-b opacity-85">
       <div className="container mx-auto px-4">
@@ -29,8 +48,28 @@ export function Header() {
             <NavMenu menuItems={menuItems} className="flex items-center space-x-6" variant="desktop" />
           </div>
 
-          {/* Search + Mobile menu button */}
+          {/* Country select + Search + Mobile menu button */}
           <div className="flex items-center space-x-2">
+            {/* Country select with world icon */}
+            <div className="hidden md:flex items-center">
+              <Globe className="mr-2 h-5 w-5 text-header-footer-text" />
+              <select
+                aria-label="Seleccionar país"
+                onChange={handleCountrySelect}
+                className="rounded-md border border-gray-600 px-3 py-2 text-sm bg-header-footer-bg text-header-footer-text focus:outline-none focus:ring-2 focus:ring-primary hover:border-primary transition-colors"
+                defaultValue=""
+                style={{ minWidth: 160 }}
+              >
+                <option value="" disabled className="text-gray-400 bg-header-footer-bg">
+                  Selecciona país
+                </option>
+                {countries.map((country: any) => (
+                  <option key={country._id} value={country.slug.current} className="bg-header-footer-bg text-header-footer-text">
+                    {country.emoji ? `${country.emoji} ` : ""}{country.name}
+                  </option>
+                ))}
+              </select>
+            </div>
             <Button
               variant="ghost"
               size="icon"
