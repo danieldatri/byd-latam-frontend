@@ -33,27 +33,31 @@ export default function SubHeader() {
 			className="w-full bg-black h-10 flex items-center justify-end px-4"
 			style={{ minHeight: '40px' }}
 		>
-			<div className="relative" style={{ width: '280px' }}>
-				<Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white" />
-				<input
-					type="text"
-					placeholder="Buscar..."
-					value={search}
-					onChange={e => setSearch(e.target.value)}
-					className="bg-gray-900 text-white rounded px-8 py-1 focus:outline-none focus:ring w-full"
-				/>
+			<div className="flex items-center gap-4">
+				<div className="relative" style={{ minWidth: 160 }}>
+					<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white" />
+					<input
+						type="text"
+						placeholder="Buscar..."
+						value={search}
+						onChange={e => setSearch(e.target.value)}
+						className="bg-gray-900 text-white rounded-md border border-gray-600 px-8 py-2 text-sm focus:outline-none focus:ring w-full"
+						style={{ minWidth: 160 }}
+					/>
+				</div>
+				<select
+					value={language}
+					onChange={e => setLanguage(e.target.value)}
+					className="bg-gray-900 text-white rounded-md border border-gray-600 px-3 py-2 text-sm focus:outline-none ml-2"
+					style={{ minWidth: 160 }}
+				>
+					{languages.map(l => (
+						<option key={l.value} value={l.value}>
+							{l.icon + ' ' + l.label}
+						</option>
+					))}
+				</select>
 			</div>
-			<select
-				value={language}
-				onChange={e => setLanguage(e.target.value)}
-				className="bg-gray-900 text-white rounded px-2 py-1 focus:outline-none ml-4"
-			>
-				{languages.map(l => (
-					<option key={l.value} value={l.value}>
-						{l.icon + ' ' + l.label}
-					</option>
-				))}
-			</select>
 		</div>
 	);
 }
