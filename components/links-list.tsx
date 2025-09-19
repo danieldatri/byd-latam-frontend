@@ -46,24 +46,11 @@ function resolveIcon(icon?: string) {
 }
 
 export default function LinksList({ title, items, variant = "internal" }: Props) {
-  return (
-    <div>
-      {title && <h3 className="font-semibold mb-4 text-header-footer-text">{title}</h3>}
-      {variant === "internal" ? (
-        <ul className="space-y-2 text-sm">
-          {items.map((item) => (
-            <li key={(item as InternalLink).href}>
-              <Link
-                href={(item as InternalLink).href}
-                className="text-header-footer-text/80 hover:text-header-footer-text transition-colors"
-              >
-                {(item as InternalLink).name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <div className="space-y-3">
+  if (variant === "social") {
+    return (
+      <div className="flex flex-col items-center">
+        <h3 className="font-semibold mb-4 text-header-footer-text text-center">Síguenos @bydlatamnews</h3>
+        <div className="flex space-x-4 justify-center">
           {items.map((item) => {
             const social = item as SocialLink
             const IconNode = resolveIcon(social.icon)
@@ -73,18 +60,33 @@ export default function LinksList({ title, items, variant = "internal" }: Props)
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center space-x-3 text-header-footer-text/80 hover:text-header-footer-text transition-colors group"
+                className="text-header-footer-text/80 hover:text-header-footer-text transition-colors"
+                aria-label={social.name}
               >
                 {IconNode}
-                <div className="text-sm">
-                  <div className="font-medium">{social.name}</div>
-                  {social.handle ? <div className="text-xs text-header-footer-text/60">{social.handle}</div> : null}
-                </div>
               </a>
             )
           })}
         </div>
-      )}
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      {title && <h3 className="font-semibold mb-4 text-header-footer-text">{title}</h3>}
+      <ul className="space-y-2 text-sm">
+        {items.map((item) => (
+          <li key={(item as InternalLink).href}>
+            <Link
+              href={(item as InternalLink).href}
+              className="text-header-footer-text/80 hover:text-header-footer-text transition-colors"
+            >
+              {(item as InternalLink).name}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
