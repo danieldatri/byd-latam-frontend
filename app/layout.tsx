@@ -51,7 +51,7 @@ export default function RootLayout({
         {/* Script de Google AdSense */}
         <Script
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2065336018146714"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9483146324615095"
           crossOrigin="anonymous"
         />
         {GA_ID && (
