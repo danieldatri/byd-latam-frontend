@@ -48,6 +48,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
+        <meta name="robots" content="index, follow" />
         {/* Script de Google AdSense */}
         <Script
           async
