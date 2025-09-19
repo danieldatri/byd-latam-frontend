@@ -1,13 +1,12 @@
 import * as React from "react"
 import {Footer} from "@/components/footer"
-import {ArticleCard} from "@/components/article-card"
 import {AdBanner} from "@/components/ad-banner"
 import {HeroBanner} from "@/components/hero-banner"
 import {Button} from "@/components/ui/button"
 import {RegionsQuickAccess} from "@/components/countries-quick-access"
 import {Newspaper, TrendingUp} from "lucide-react"
 import {getAllCountries, getAllPosts, getFeaturedPosts, Post} from "@/lib/sanity"
-import {SectionHeader} from "@/components/section-header"
+import {ArticlesBlock} from "@/components/articles-block"
 
 export default async function HomePage() {
   // Obtener datos reales de Sanity
@@ -38,44 +37,20 @@ export default async function HomePage() {
           {/* Main Content */}
           <div className="lg:col-span-3">
             {/* Featured Articles */}
-            <section className="mb-12">
-              <SectionHeader
-                name="Destacados"
-                icon={TrendingUp}
-              />
-              {featuredArticles && featuredArticles.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {featuredArticles.map((article: Post) => (
-                    <ArticleCard article={article} featured key={article._id} />
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-8 text-muted-foreground">
-                  No hay artículos destacados disponibles
-                </div>
-              )}
-            </section>
-
+            <ArticlesBlock
+              name="Destacados"
+              icon={TrendingUp}
+              articles={featuredArticles}
+              featured
+            />
             {/* Latest News */}
-            <section>
-              <SectionHeader
-                name="Últimas Noticias"
-                icon={Newspaper}
-                link="/articles"
-                linkLabel="Ver todas"
-              />
-              {recentNonFeatured && recentNonFeatured.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {recentNonFeatured.map((article: Post) => (
-                    <ArticleCard article={article} key={article._id} />
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-8 text-muted-foreground">
-                  No hay noticias recientes disponibles
-                </div>
-              )}
-            </section>
+            <ArticlesBlock
+              name="Últimas Noticias"
+              icon={Newspaper}
+              articles={recentNonFeatured}
+              link="/articles"
+              linkLabel="Ver todas"
+            />
           </div>
 
           {/* Sidebar */}
