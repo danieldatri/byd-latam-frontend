@@ -35,7 +35,7 @@ export function Footer() {
         <div className="border-t border-header-footer-text/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-header-footer-text/80">
           <p>&copy; 2024 BYD Latam News. Todos los derechos reservados.</p>
           <div className="flex space-x-4 mt-4 md:mt-0">
-            <Link href="/privacidad" className="hover:text-header-footer-text transition-colors">
+            <Link href="/privacy-policy" className="hover:text-header-footer-text transition-colors">
               Política de Privacidad
             </Link>
             <Link href="/terminos" className="hover:text-header-footer-text transition-colors">
