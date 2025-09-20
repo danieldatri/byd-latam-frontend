@@ -38,7 +38,7 @@ export function Footer() {
             <Link href="/privacy-policy" className="hover:text-header-footer-text transition-colors">
               Política de Privacidad
             </Link>
-            <Link href="/terminos" className="hover:text-header-footer-text transition-colors">
+            <Link href="/terms-of-use" className="hover:text-header-footer-text transition-colors">
               Términos de Uso
             </Link>
           </div>
