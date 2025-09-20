@@ -28,6 +28,14 @@ export default function SubHeader() {
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, [lastScrollY]);
 
+	const handleSearch = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		const term = search.trim();
+		if (term.split(' ').some(word => word.length >= 3)) {
+			window.location.href = `/search?query=${encodeURIComponent(term)}`;
+		}
+	};
+
 	return (
 		<div
 			className="w-full bg-black h-10 flex items-center justify-end px-4"
@@ -36,14 +44,17 @@ export default function SubHeader() {
 			<div className="flex items-center gap-4">
 				<div className="relative" style={{ minWidth: 160 }}>
 					<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white" />
-					<input
-						type="text"
-						placeholder="Buscar..."
-						value={search}
-						onChange={e => setSearch(e.target.value)}
-						className="bg-gray-900 text-white rounded-md border border-gray-600 px-8 py-2 text-sm focus:outline-none focus:ring w-full"
-						style={{ minWidth: 160 }}
-					/>
+					<form onSubmit={handleSearch} className="flex">
+						<input
+							type="text"
+							placeholder="Buscar..."
+							value={search}
+							onChange={e => setSearch(e.target.value)}
+							className="bg-gray-900 text-white rounded-l-md border border-gray-600 px-8 py-2 text-sm focus:outline-none focus:ring w-full"
+							style={{ minWidth: 160 }}
+						/>
+						<button type="submit" className="rounded-r-md bg-gray-900 border border-gray-600 text-white px-4 py-2 text-sm font-semibold ml-2 hover:bg-gray-800 transition-colors">Buscar</button>
+					</form>
 				</div>
 				<select
 					value={language}

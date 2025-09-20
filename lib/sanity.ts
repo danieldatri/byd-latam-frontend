@@ -282,6 +282,27 @@ export async function getPostsByCountry(country: string) {
   return await client.fetch(postsByCountryQuery, { slug: country })
 }
 
+export async function getPostsBySearch(term: string) {
+  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID === "your-project-id") {
+    return [];
+  }
+  const query = `
+    *[_type == "post" && (title match $term || excerpt match $term || body match $term)] | order(publishedAt desc) {
+      _id,
+      title,
+      slug,
+      excerpt,
+      body,
+      publishedAt,
+      country->{_id, name, emoji},
+      featured,
+      mainImage { asset->{_id, url}, alt },
+      categories[]->{_id, title}
+    }
+  `;
+  return await client.fetch(query, { term: `*${term}*` });
+}
+
 // Types para TypeScript
 export interface Post {
   _id: string

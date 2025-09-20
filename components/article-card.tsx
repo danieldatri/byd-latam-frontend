@@ -4,24 +4,8 @@ import { Calendar, MapPin, Star } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { urlFor } from "@/lib/sanity"
+import { extractTextFromBody } from "@/lib/utils"
 
-// Función para extraer texto plano del contenido de Sanity
-function extractTextFromBody(body: any[]): string {
-  if (!body || !Array.isArray(body)) return ""
-  
-  return body
-    .filter((block) => block._type === 'block' && block.children)
-    .map((block) => 
-      block.children
-        .filter((child: any) => child._type === 'span')
-        .map((child: any) => child.text)
-        .join('')
-    )
-    .join(' ')
-    .slice(0, 200) + '...'
-}
-
-import * as React from "react";
 interface ArticleCardProps {
   article: {
     _id: string

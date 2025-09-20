@@ -13,6 +13,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [countries, setCountries] = useState([])
 
+
   useEffect(() => {
     async function fetchCountries() {
       const res = await fetch("/api/countries")
@@ -48,7 +49,7 @@ export function Header() {
             <NavMenu menuItems={menuItems} className="flex items-center space-x-6" variant="desktop" />
           </div>
 
-          {/* Country select + Search + Mobile menu button */}
+          {/* Country select + Mobile menu button */}
           <div className="flex items-center md:w-auto space-x-2">
             {/* Country select with world icon - Desktop */}
             <div className="hidden md:flex items-center">
@@ -61,11 +62,11 @@ export function Header() {
                 style={{ minWidth: 160 }}
               >
                 <option value="" disabled className="text-gray-400 bg-header-footer-bg">
-                  Todas las Regiones
+                  Selecciona país
                 </option>
                 {countries.map((country: any) => (
                   <option key={country._id} value={country.slug.current} className="bg-header-footer-bg text-header-footer-text">
-                    {country.emoji ? `${country.emoji} ` : ""}{country.name}
+                    {country.name}
                   </option>
                 ))}
               </select>
