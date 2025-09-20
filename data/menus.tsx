@@ -1,7 +1,7 @@
 export const links = [
   { name: "Inicio", href: "/", showInHeader: true, showInFooter: false },
   { name: "Artículos", href: "/articles", showInHeader: true, showInFooter: true },
-  { name: "Reviews", href: "/reviews", showInHeader: true, showInFooter: true },
+  { name: "Reviews", href: "/reviews", showInHeader: false, showInFooter: false },
   { name: "Contacto", href: "/contacto", showInHeader: false, showInFooter: true },
   { name: "Sobre Nosotros", href: "/sobre-nosotros", showInHeader: false, showInFooter: true },
 ]
